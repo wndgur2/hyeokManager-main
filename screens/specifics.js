@@ -1,7 +1,7 @@
-import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
 import { theme } from '../colors';
-import * as NavigationBar from 'expo-navigation-bar';
 import React, {useEffect, useState} from "react";
+import * as NavigationBar from 'expo-navigation-bar';
+import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Specifics() {
