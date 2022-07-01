@@ -1,8 +1,8 @@
-import { theme } from '../colors';
 import React, {useEffect, useState} from "react";
-import * as NavigationBar from 'expo-navigation-bar';
 import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as NavigationBar from 'expo-navigation-bar';
+import { theme } from '../colors';
 
 export default function Specifics() {
   NavigationBar.setBackgroundColorAsync(theme.bg);

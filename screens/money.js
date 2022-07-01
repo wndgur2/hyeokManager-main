@@ -1,10 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, Text, View, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
-import { theme } from '../colors';
-import * as NavigationBar from 'expo-navigation-bar';
 import React, {useEffect, useState} from "react";
+import { Platform, Text, View, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons";
+import * as NavigationBar from 'expo-navigation-bar';
+import { StatusBar } from 'expo-status-bar';
+import { theme } from '../colors';
 import styles from '../styles';
 
 export default function Money() {
@@ -18,7 +18,7 @@ export default function Money() {
   const [totalMoney, setTotalMoney] = useState(0);
   const [date, setDate] = useState(0);
   const [dDay, setDDay] = useState(0);
-  const [isAddMode, setAddMode] = useState(false);
+  const [isAddMode, setAddMode] = useState(false);  
   const [isLoading, setLoading] = useState(true);
 
   const loadData = async () => {

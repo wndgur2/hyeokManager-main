@@ -7,7 +7,7 @@ import TabIcon from "./TabIcon";
 import {theme} from "../colors";
 import Money from "../screens/money";
 import Specifics from "../screens/specifics";
-import Memo from "../screens/memo";
+import Memos from "../screens/memos";
 
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -66,7 +66,7 @@ export default function TabsNav() {
       >
         {() =>
         <Stack.Navigator>
-          <Stack.Screen name="memo" component={Memo} options={{headerShown: false,}}/>
+          <Stack.Screen name="memos" component={Memos} options={{headerShown: false,}}/>
         </Stack.Navigator>}
       </Tabs.Screen>
     </Tabs.Navigator>
