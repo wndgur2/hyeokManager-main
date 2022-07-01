@@ -4,7 +4,7 @@ import { theme } from '../colors';
 import * as NavigationBar from 'expo-navigation-bar';
 import React, {useEffect, useState} from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AntDesign, Feather, MaterialCommunityIcons} from "@expo/vector-icons";
+import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons";
 import styles from '../styles';
 
 export default function Money() {
@@ -101,7 +101,7 @@ export default function Money() {
         <Text style={styles.todayMoney}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
       </View>
 
-      <TouchableOpacity style={{...styles.plus}} onPress={()=>{setAddMode(true)}}><AntDesign name="plus" size={40} style={{opacity: isAddMode? 1: 0.3}} /></TouchableOpacity>
+      <TouchableOpacity style={styles.plus} onPress={()=>{setAddMode(true)}}><AntDesign name="plus" size={40} style={{opacity: isAddMode? 1: 0.3}} /></TouchableOpacity>
       <TouchableOpacity style={styles.minus} onPress={()=>{setAddMode(false)}}><AntDesign name="minus" size={48} style={{opacity: isAddMode? 0.3: 1}} /></TouchableOpacity>
       <View style={styles.rects}>
         <TouchableOpacity style={{...styles.rect, backgroundColor: theme.green}} onPress={()=>{isAddMode? addMoney(1000) : spendMoney(1000);}}><Text style={styles.rectText}>\</Text></TouchableOpacity>
