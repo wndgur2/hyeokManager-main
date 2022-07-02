@@ -32,7 +32,7 @@ export default function TabsNav() {
         name="돈"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName={"card"} color={color} focused={focused}  />
+            <TabIcon iconName={"card"} color={color} focused={focused} />
           ),
         }}
       >
