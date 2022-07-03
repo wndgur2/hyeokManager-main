@@ -6,11 +6,10 @@ export default styles = StyleSheet.create({
     "flex": 1,
     backgroundColor: theme.bg,
     width: "100%",
-  },
-
-  moneyContainer:{
-    width: "100%",
-    marginBottom: "5%",
+    top: 30,
+    overflow:"hidden",
+    margin:0,
+    padding:0,
   },
 
   totalText:{
@@ -27,7 +26,6 @@ export default styles = StyleSheet.create({
 
   totalMoney:{
     top: -30,
-    width: "100%",
     fontStyle: "normal",
     fontWeight: "400",
     fontSize: 60,
@@ -73,8 +71,7 @@ export default styles = StyleSheet.create({
   rects:{
     position: "absolute",
     width: "100%",
-    bottom: 0,
-    left: 0,
+    bottom: 30,
   },
 
   rect:{
@@ -101,14 +98,6 @@ export default styles = StyleSheet.create({
     bottom: 3,
   },
 
-  reset:{
-    position: "absolute",
-    width: "100%",
-    height: 50,
-    left: 370,
-    top: 50,
-  },
-
   newDay:{
     position: "absolute",
     width: "10%",
@@ -118,21 +107,5 @@ export default styles = StyleSheet.create({
     alignItems: "center",
     justifyContent:"center",
     zIndex:2,
-  },
-  plus:{
-    position: "absolute",
-    width: "12%",
-    height: 55,
-    left: 16,
-    top: 540,
-    justifyContent:"center",
-  },
-  minus:{
-    position: "absolute",
-    width: "12%",
-    height: 55,
-    left: 352,
-    top: 540,
-    justifyContent:"center",
   },
 });
