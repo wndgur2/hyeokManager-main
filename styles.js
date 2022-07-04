@@ -6,7 +6,6 @@ export default styles = StyleSheet.create({
     "flex": 1,
     backgroundColor: theme.bg,
     width: "100%",
-    top: 30,
     overflow:"hidden",
     margin:0,
     padding:0,
@@ -15,7 +14,7 @@ export default styles = StyleSheet.create({
   totalText:{
     fontStyle: "normal",
     fontWeight: "400",
-    fontSize: 36,
+    fontSize: 32,
     lineHeight: 48,
     letterSpacing: 5,
     textAlign: "right",
@@ -25,10 +24,10 @@ export default styles = StyleSheet.create({
   },
 
   totalMoney:{
-    top: -30,
+    top: -20,
     fontStyle: "normal",
     fontWeight: "400",
-    fontSize: 60,
+    fontSize: 52,
     letterSpacing: 10,
     textAlign: "right",
 
@@ -41,37 +40,23 @@ export default styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 40,
     letterSpacing: 5,
-    left: 8,
 
     color: "#FFFFFF",
-    zIndex: 0,
   },
 
   todayMoney:{
-    top: -40,
+    top: -20,
     width: "120%",
-    fontSize: 92,
+    fontSize: 72,
     letterSpacing: 10,
     color: "#000000",
     zIndex: 1,
   },
 
-  today:{
-    top:46,
-    paddingRight:14,
-    display: "flex",
-    width: "55%",
-    height: 40,
-    flexDirection:'row',
-    justifyContent: "flex-end",
-    zIndex: 2,
-    marginBottom:-5,
-  },
-
   rects:{
     position: "absolute",
+    bottom:0,
     width: "100%",
-    bottom: 30,
   },
 
   rect:{
@@ -88,24 +73,11 @@ export default styles = StyleSheet.create({
     fontSize: 32,
     display: "flex",
   },
-  
-  btns:{
-    fontStyle: "normal",
-    fontWeight: "100",
-    fontSize: 24,
-    color: "#FFFFFF",
-    display: "flex",
-    bottom: 3,
-  },
 
-  newDay:{
-    position: "absolute",
-    width: "10%",
-    height: 50,
-    left: 330,
-    top: 320,
-    alignItems: "center",
-    justifyContent:"center",
-    zIndex:2,
-  },
+  operators:{
+    bottom:5,
+    flexDirection:"row",
+    justifyContent:"space-between",
+    paddingHorizontal:15
+  }
 });

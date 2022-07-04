@@ -1,14 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
-import { FlatList, Platform, Text, View, TouchableOpacity, LayoutAnimation, KeyboardAvoidingView} from 'react-native';
+import { FlatList, Platform, Text, View, TouchableOpacity, LayoutAnimation, UIManager} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons";
+import {AntDesign} from "@expo/vector-icons";
 import * as NavigationBar from 'expo-navigation-bar';
-import { StatusBar } from 'expo-status-bar';
 import { theme } from '../colors';
-import memoStyles from '../memoStyles';
 import ScreenLayout from "../auth/ScreenLayout";
-import Memo from "../components/memo";
-import { ScrollView, TextInput } from "react-native-gesture-handler";
+import { TextInput } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Memos() {
@@ -16,13 +13,12 @@ export default function Memos() {
 
   const MEMO_STORAGE_KEY = '@memos__';
 
-  const [isRemoveMode, setRemoveMode] = useState(false);
   const [memos, setMemos] = useState(new Array());
   const [tempMemo, setTempMemo] = useState();
   const [delettingMemo, setDelettingMemo] = useState();
-  const [isAlerted, setAlerted] = useState(false);
+  const [editingMemo, setEditingMemo] = useState();
+  const [isRemoveMode, setRemoveMode] = useState(false);
 
-  const flatList = useRef();
 
   const loadMemos = async () => {
     try{
@@ -45,45 +41,64 @@ export default function Memos() {
   }, []);
 
   useEffect( () => {
-    console.log(memos);
   }, [memos]);
 
   const clear = () =>{
-    setAlerted(false);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setRemoveMode(false);
 
     var newMemos = memos;
     newMemos.forEach(mem =>{
-      if(mem[1]==""){
-        newMemos.splice(newMemos.indexOf(mem), 1);
-      }
-      mem[2] = false;
+      if(mem[1]=="")
+        newMemos.splice(newMemos.findIndex(m=>m[0] == mem[0]), 1);
+      else mem[2] = false;
     });
     setMemos(newMemos);
     setTempMemo("");
     saveAsyncStorage(newMemos, MEMO_STORAGE_KEY);
   }
 
-  const addMemo = (newMemo) => {
+  const addMemo = () => {
     clear();
     var newMemos = memos;
+    const newMemo = [new Date().getTime(),"", true];
     if(memos.length != 0) newMemos = [...memos, newMemo];
     else newMemos = [newMemo];
+
+    const index = newMemos.findIndex(m=>m[0]==newMemo[0]);
+
+    for(let i=index; i>0; i--){
+      console.log("i=", i);
+      newMemos[i] = newMemos[i-1];
+    }
+    newMemos[0] = newMemo;
+    newMemos[0][2] = true;
     setMemos(newMemos);
+    setTempMemo(newMemo[1]);
     saveAsyncStorage(newMemos, MEMO_STORAGE_KEY);
   }
 
   const editMemo = (memo) => {
     clear();
+    setEditingMemo(memo[0]);
     var newMemos = memos;
-    newMemos[newMemos.indexOf(memo)][2] = true;
+    const index = newMemos.findIndex(m=>m[0]==memo[0]);
+    console.log(index);
+    for(let i=index; i>0; i--){
+      console.log("i=", i);
+      newMemos[i] = newMemos[i-1];
+    }
+    newMemos[0] = memo;
+    newMemos[0][2] = true;
     setMemos(newMemos);
     setTempMemo(memo[1]);
+    saveAsyncStorage(newMemos, MEMO_STORAGE_KEY);
   }
 
   const removeMemo = (memo) => {
-    setDelettingMemo(memo[0]);
-    const index = memos.indexOf(memo);
     var newMemos = memos;
+    const index = newMemos.findIndex(m=>m[0]==memo[0])
+    setDelettingMemo(newMemos[index][0]);
     newMemos.splice(index, 1);
     saveAsyncStorage(newMemos, MEMO_STORAGE_KEY);
     setMemos(newMemos);
@@ -101,68 +116,63 @@ export default function Memos() {
     clear();
     const newMemos = [];
     setMemos(newMemos);
-    setAlerted(false);
+    setRemoveMode(false);
     saveAsyncStorage(newMemos, MEMO_STORAGE_KEY);
   }
   
   const renderMemo = ({ item: memo }) => {
     return (
-      <TouchableOpacity 
-        style={{padding:5}}
-        onPress={() => {
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-          editMemo(memo);
-        }}
-      >
-      {(memo[2]?
-        <View style={{left:-5, margin:0, padding:0, backgroundColor: theme.pink, flexDirection:"row", justifyContent:"space-between", width:"100%"}}>
+      <View style={{alignItems:"center", width:"100%"}}>{(memo[2]?
+        <View style={{margin:25, width:"90%", borderRadius:10, backgroundColor:theme.pink, flexDirection:"row", justifyContent:"space-around"}}>
           <TextInput
-            style={{fontSize:26, margin:5, padding:0, width:"90%", letterSpacing:1, lineHeight:36}}
+            style={{fontSize:26, margin:5, padding:15, width:"90%", letterSpacing:1, lineHeight:36}}
             multiline={true}
             placeholder="input text."
-            returnKeyType="done"
+            blurOnSubmit={true}
             value={tempMemo}
-            onSubmitEditing={() => finishAdding(memos.indexOf(memo))}
+            onSubmitEditing={() => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+              finishAdding(memos.findIndex(m=>m[0]==memo[0]))
+            }}
             onChangeText={(text) => setTempMemo(text)}
             autoFocus={true}
+            onBlur={()=>{
+              clear();
+            }}
           />
-          <TouchableOpacity style={{alignItems: 'flex-end', backgroundColor:theme.red, justifyContent:"center", width:"10%"}} onPress={()=>{removeMemo(memo)}}><Ionicons name={"close-outline"} color={"white"} size={42}/></TouchableOpacity>
-        </View> :
-        <Text style={{fontSize:24, letterSpacing:-2}} numberOfLines={1}>{memo[1]}</Text>
-      )}
-      </TouchableOpacity>
+        </View> 
+        :
+        <TouchableOpacity 
+          style={{padding:5}}
+          
+          onPress={() => {
+            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+            isRemoveMode?removeMemo(memo):editMemo(memo);
+          }}>
+          <Text style={{paddingVertical:5, paddingHorizontal:15, fontSize:20, lineHeight:32, letterSpacing:-1, borderRadius:10, backgroundColor:theme.darkBg}} numberOfLines={1}>{memo[1]}</Text>
+        </TouchableOpacity>
+        )}
+      </View>
     )
   };
 
   return (
     <ScreenLayout>
-      <View style={{ backgroundColor:theme.darkBg , paddingTop:20, paddingBottom:12}}><Text style={{fontSize:32, textAlign:"center", color:theme.pink}}>MEMOS</Text></View>
+      <View style={{ backgroundColor:theme.bg, paddingVertical:12}}><Text style={{fontSize:32, textAlign:"center", color:theme.pink}}>MEMOS</Text></View>
       <View style={{height:"83%"}}>
-        <KeyboardAvoidingView
-          style={{ flex: 1}}
-          behavior="padding"
-          keyboardVerticalOffset={-100}
-        >
-          <ScrollView
-            nestedScrollEnabled={true}
-          >
-            <FlatList
-              inverted={false}
-              ref={flatList}
-              data={memos}
-              renderItem={renderMemo}
-              keyExtractor={(memo) => memo[0]}
-              extraData={delettingMemo}
-            />
-          </ScrollView>
-        </KeyboardAvoidingView>
+        <FlatList
+          data={memos}
+          renderItem={renderMemo}
+          keyExtractor={(memo) => memo[0]}
+          extraData={memos}
+        />
       </View>
 
-      <View style={{flex:1, bottom:30, left:2, zIndex:2, flexDirection:"row", justifyContent:"space-between", backgroundColor:theme.bg, paddingHorizontal:13, alignItems:"center"}}>
-        <TouchableOpacity style={memoStyles.plus} onPress={()=>{addMemo([new Date().getTime(),"", true]);}}><AntDesign name="plus" size={40}/></TouchableOpacity>
-        {isAlerted? <Text style={{color:"red", fontSize:20, letterSpacing:-1.5, top:7}}>Press Again to DELETE ALL MEMOS</Text>:<View></View>}
-        <TouchableOpacity onPress={()=>{isAlerted? deleteAllMemos():setAlerted(true)}}><AntDesign name="minus" size={44} color={isAlerted? "red": "black"} /></TouchableOpacity>
+      <View style={{height:"8%", bottom:0, zIndex:1, flexDirection:"row", justifyContent:"space-between", backgroundColor:theme.bg, paddingHorizontal:15, alignItems:"center"}}>
+        <TouchableOpacity onPress={()=>{addMemo();}}><AntDesign name="plus" size={40}/></TouchableOpacity>
+        <TouchableOpacity onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}><AntDesign name="minus" size={44} color={isRemoveMode? "red": "black"} /></TouchableOpacity>
       </View>
+
     </ScreenLayout>
   );
 }

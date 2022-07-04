@@ -89,25 +89,25 @@ export default function Money() {
         <TouchableOpacity style={{top:20, width:"7%"}} onPress={reset}><AntDesign name="exclamationcircle" size={22} /></TouchableOpacity>
       </View>
 
-      <View style={{marginTop: "3%",}}>
+      <View style={{paddingTop: "3%",}}>
         <Text style={styles.totalText}>TOTAL</Text>
         <Text style={styles.totalMoney}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
       </View>
       
-      <View style={styles.today}>
-        <TouchableOpacity onPress={newDay}><MaterialCommunityIcons color={"white"} name="autorenew" size={36} /></TouchableOpacity>
-      </View>
-
-      <View style={styles.moneyContainer}>
-        <Text style={styles.todayText}>TODAY</Text>
+      <View style= {{paddingVertical:"20%",}}>
+        <View style={{ padding:8, flexDirection:'row', justifyContent:"flex-start"}}>
+          <Text style={styles.todayText}>TODAY</Text>
+          <TouchableOpacity style={{ top:"3%" }} onPress={newDay}><MaterialCommunityIcons color={"white"} name="autorenew" size={32} /></TouchableOpacity>
+          <View></View>
+        </View>
         <Text style={styles.todayMoney}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
       </View>
 
-      <View style={{top:70, flexDirection:"row", justifyContent:"space-between", paddingHorizontal:15}}>
-        <TouchableOpacity onPress={()=>{setAddMode(true)}}><AntDesign name="plus" size={40} style={{top:2, opacity: isAddMode? 1: 0.3}} /></TouchableOpacity>
-        <TouchableOpacity onPress={()=>{setAddMode(false)}}><AntDesign name="minus" size={46} style={{top: -2, opacity: isAddMode? 0.3: 1}} /></TouchableOpacity>
-      </View>
       <View style={styles.rects}>
+        <View style={styles.operators}>
+          <TouchableOpacity onPress={()=>{setAddMode(true)}}><AntDesign name="plus" size={40} style={{top:2, opacity: isAddMode? 1: 0.3}} /></TouchableOpacity>
+          <TouchableOpacity onPress={()=>{setAddMode(false)}}><AntDesign name="minus" size={46} style={{top: -2, opacity: isAddMode? 0.3: 1}} /></TouchableOpacity>
+        </View>
         <TouchableOpacity style={{...styles.rect, backgroundColor: theme.green}} onPress={()=>{isAddMode? addMoney(1000) : spendMoney(1000);}}><Text style={styles.rectText}>\</Text></TouchableOpacity>
         <TouchableOpacity style={{...styles.rect, backgroundColor: theme.pink}} onPress={()=>{isAddMode? addMoney(5000) : spendMoney(5000);}}><Text style={styles.rectText}>\ \ \ \ \</Text></TouchableOpacity>
         <TouchableOpacity style={{...styles.rect, backgroundColor: theme.red}} onPress={()=>{isAddMode? addMoney(10000) : spendMoney(10000);}}><Text style={styles.rectText}>\ \ \ \ \ \ \ \ \ \</Text></TouchableOpacity>

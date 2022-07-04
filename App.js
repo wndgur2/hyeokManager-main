@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
+import { Platform, StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView, Alert, StatusBar } from 'react-native';
 import { createStackNavigator } from "@react-navigation/stack";
 import { theme } from './colors';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -17,7 +16,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor={theme.darkBg}/>
+      <StatusBar backgroundColor={theme.bg} barStyle="light-content" />
       <Stack.Navigator screenOptions={{presentation:"modal", headerShown:false}}>
         <Stack.Screen name="Tabs" component={TabsNav} />
       </Stack.Navigator>
