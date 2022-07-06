@@ -2,36 +2,97 @@ import {StyleSheet} from "react-native";
 import { theme} from "./colors";
 
 export default styles = StyleSheet.create({
+  tabNavBackgroundContainer:{
+    flex:1,
+    display:"flex",
+    position:"absolute",
+    backgroundColor:"blue",
+    width:"100%",
+    height:"6%",
+    bottom:0,
+  },
+
+  tabNavBackground:{
+    position:"absolute",
+    width:"100%",
+    height:"3%",
+    flex:1,
+    bottom:0,
+  },
+
   container: {
-    "flex": 1,
-    backgroundColor: theme.bg,
+    "flex": 2,
+    backgroundColor: theme.c1,
     width: "100%",
     overflow:"hidden",
     margin:0,
     padding:0,
+    borderWidth:0,
+  },
+
+  bottomLeft:{
+    position:"absolute",
+    width:"50%",
+    height:"50%",
+    bottom:0,
+  },
+
+  bottomRight:{
+    position:"absolute",
+    width:"50%",
+    height:"50%",
+    bottom:0,
+    right:0,
+  },
+
+  topLeft:{
+    position:"absolute",
+    width:"50%",
+    height:"50%",
+  },
+
+  topRight:{
+    position:"absolute",
+    width:"50%",
+    height:"50%",
+    right:0,
+  },
+
+  roundedContainer:{
+    borderRadius:24,
+    "flex": 1,
+    backgroundColor: theme.c0,
+    width: "100%",
+  },
+
+  refresh:{
+    width:"14%",
+    alignItems:"center",
+    justifyContent:"center",
+    borderRadius:20,
+    backgroundColor:theme.c5,
   },
 
   moneyContainer: {
-    paddingVertical:"2%",
-    paddingHorizontal:"1%",
+    paddingVertical:"3%",
+    paddingHorizontal:"4%",
+    backgroundColor: theme.b0,
+    borderRadius:23,
+    margin:10,
   },
 
   moneyTitle:{
     fontStyle: "normal",
-    fontWeight: "400",
     fontSize: 24,
-    letterSpacing: 2,
-
-    color: "white",
+    color: "black",
     zIndex: 0,
   },
 
   money:{
     fontStyle: "normal",
     fontWeight: "400",
-    fontSize: 36,
-    letterSpacing: 4,
-
+    fontSize: 32,
+    letterSpacing: 2,
     color: "black",
     zIndex: 1,
   },
@@ -39,28 +100,37 @@ export default styles = StyleSheet.create({
   rects:{
     position: "absolute",
     bottom:0,
-    width: "100%",
+    width: "14%",
+    right:0,
+    backgroundColor:theme.c1,
+    borderTopLeftRadius:24,
+    justifyContent:"center",
+    alignItems:"center",
   },
 
   rect:{
-    width: "100%",
-    height: 67,
+    width: "80%",
+    height: 40,
     left: 0,
+    marginVertical:4,
     justifyContent: "center",
     alignItems:"center",
+    backgroundColor:theme.c0,
+    borderRadius:24,
   },
 
   rectText:{
     fontStyle: "normal",
     fontWeight: "100",
-    fontSize: 32,
+    fontSize: 20,
+    color: "black",
     display: "flex",
   },
 
-  operators:{
-    bottom:5,
-    flexDirection:"row",
-    justifyContent:"space-between",
-    paddingHorizontal:15
+  operator:{
+    alignItems:"center",
+    justifyContent:"center",
+    paddingHorizontal:5,
+    paddingVertical:8,
   }
 });

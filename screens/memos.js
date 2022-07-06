@@ -9,7 +9,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Memos() {
-  NavigationBar.setBackgroundColorAsync(theme.bg);
+  NavigationBar.setBackgroundColorAsync(theme.c5);
 
   const MEMO_STORAGE_KEY = '@memos__';
 
@@ -39,7 +39,7 @@ export default function Memos() {
     loadMemos();
     console.log(memos);
   }, []);
-
+  
   useEffect( () => {
   }, [memos]);
 
@@ -123,7 +123,7 @@ export default function Memos() {
   const renderMemo = ({ item: memo }) => {
     return (
       <View style={{alignItems:"center", width:"100%"}}>{(memo[2]?
-        <View style={{margin:25, width:"90%", borderRadius:10, backgroundColor:theme.pink, flexDirection:"row", justifyContent:"space-around"}}>
+        <View style={{margin:25, width:"90%", borderRadius:10, backgroundColor:theme.c0, flexDirection:"row", justifyContent:"space-around"}}>
           <TextInput
             style={{fontSize:26, margin:5, padding:15, width:"90%", letterSpacing:1, lineHeight:36}}
             multiline={true}
@@ -149,7 +149,7 @@ export default function Memos() {
             LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
             isRemoveMode?removeMemo(memo):editMemo(memo);
           }}>
-          <Text style={{paddingVertical:5, paddingHorizontal:15, fontSize:20, lineHeight:32, letterSpacing:-1, borderRadius:10, backgroundColor:theme.darkBg}} numberOfLines={1}>{memo[1]}</Text>
+          <Text style={{paddingVertical:5, paddingHorizontal:15, fontSize:20, lineHeight:32, letterSpacing:-1, borderRadius:10, backgroundColor:theme.c0}} numberOfLines={1}>{memo[1]}</Text>
         </TouchableOpacity>
         )}
       </View>
@@ -167,7 +167,7 @@ export default function Memos() {
         />
       </View>
 
-      <View style={{height:"8%", bottom:0, zIndex:1, flexDirection:"row", justifyContent:"space-between", backgroundColor:theme.bg, paddingHorizontal:15, alignItems:"center"}}>
+      <View style={{height:"8%", bottom:0, zIndex:1, flexDirection:"row", justifyContent:"space-between", backgroundColor:theme.c1, paddingHorizontal:15, alignItems:"center"}}>
         <TouchableOpacity onPress={()=>{addMemo();}}><AntDesign name="plus" size={40}/></TouchableOpacity>
         <TouchableOpacity onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}><AntDesign name="minus" size={44} color={isRemoveMode? "red": "black"} /></TouchableOpacity>
       </View>

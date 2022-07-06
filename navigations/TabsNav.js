@@ -15,26 +15,34 @@ const Stack = createStackNavigator();
 export default function TabsNav() {
   return (
     <Tabs.Navigator
+      sceneContainerStyle={{
+        borderWidth:0,
+      }}
       screenOptions={{
-        headerShown:true,
-        headerStyle:{
-          backgroundColor:theme.darkBg,
-        },
+        headerShown:false,
         tabBarInactiveTintColor: "black",
-        tabBarActiveBackgroundColor: theme.bg,
-        tabBarActiveTintColor: "white",
-        tabBarInactiveBackgroundColor: theme.darkBg,
-        tabBarShowLabel:false,
+        tabBarActiveBackgroundColor: theme.c5,
+        tabBarActiveTintColor: theme.c1,
+        tabBarInactiveBackgroundColor: theme.c1,
+        tabBarLabelStyle:{
+          fontSize:12,
+          top:"-5%",
+        },        
         tabBarStyle:{
-          borderTopColor:theme.darkBg,
-        }
+          height:"6%",
+          borderTopWidth:0,
+          backgroundColor:theme.c1,
+          borderTopWidth:0,
+          shadowOffset:{width:0, height:0},
+        },
       }}
     >
       <Tabs.Screen
         name="Money"
         options={{
+          tabBarItemStyle:{borderTopRightRadius:24, borderBottomRightRadius:24},
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName={"card"} color={color} focused={focused} />
+            <TabIcon iconName={"card"} color={color} focused={focused}/>
           ),
         }}
       >
@@ -47,6 +55,7 @@ export default function TabsNav() {
       <Tabs.Screen
         name="Expense"
         options={{
+          tabBarItemStyle:{borderRadius:24},
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"list-outline"} color={color} focused={focused} />
           ),
@@ -61,6 +70,7 @@ export default function TabsNav() {
       <Tabs.Screen
         name="Memos"
         options={{
+          tabBarItemStyle:{borderTopLeftRadius: 24, borderBottomLeftRadius: 24},
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"create-outline"} color={color} focused={focused} />
           ),

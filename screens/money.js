@@ -13,7 +13,7 @@ export default function Money() {
   const TODAY_MONEY_STORAGE_KEY = '@today';
   const LAST_DATE_STORAGE_KEY = '@lastDate';
 
-  NavigationBar.setBackgroundColorAsync(theme.bg);
+  NavigationBar.setBackgroundColorAsync(theme.c5);
   const [todayMoney, setTodayMoney] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
   const [date, setDate] = useState(0);
@@ -38,7 +38,6 @@ export default function Money() {
   };
 
   useEffect( () => {
-    loadData();
     const tempDate = new Date().getDate();
     setDate(tempDate);
     setDDay(25-tempDate > 0 ? 25-tempDate : 55-tempDate);
@@ -83,34 +82,33 @@ export default function Money() {
   
   return (
     <View style={styles.container}>
-      <View style={{paddingHorizontal:10, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-        <View style={{width:"7%"}}></View>
-        <Text style={{textAlign:"center", fontSize:26, paddingTop:"2%",}}>D-{typeof(dDay) == "number"? dDay : "Loading..."}</Text>
-        <TouchableOpacity style={{paddingTop:"4%", width:"7%"}} onPress={reset}><AntDesign name="exclamationcircle" size={22} /></TouchableOpacity>
-      </View>
-
-      <View style={styles.moneyContainer}>
-        <Text style={styles.moneyTitle}>TOTAL</Text>
-        <Text style={styles.money}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
-      </View>
-      
-      <View style={styles.moneyContainer}>
-        <View style={{flexDirection:'row', justifyContent:"flex-start"}}>
-          <Text style={styles.moneyTitle}>TODAY</Text>
-          <TouchableOpacity style={{ left:"30%", borderRadius:10, backgroundColor:theme.darkBg2 }} onPress={newDay}><MaterialCommunityIcons color={"white"} name="autorenew" size={32} /></TouchableOpacity>
-          <View></View>
+      <View style={{...styles.bottomLeft, backgroundColor:theme.c5}}></View>
+      <View style={styles.roundedContainer}>
+        <View style={{paddingHorizontal:10, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+          <View style={{width:"7%"}}></View>
+          <Text style={{textAlign:"center", fontSize:24, paddingTop:"2%",}}>D-{typeof(dDay) == "number"? dDay : "Loading..."}</Text>
+          <TouchableOpacity style={{paddingTop:"3%", width:"7%"}} onPress={()=>{reset()}}><AntDesign name="exclamationcircle" size={22} /></TouchableOpacity>
         </View>
-        <Text style={styles.money}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
-      </View>
 
-      <View style={styles.rects}>
-        <View style={styles.operators}>
-          <TouchableOpacity onPress={()=>{setAddMode(true)}}><AntDesign name="plus" size={40} style={{top:2, opacity: isAddMode? 1: 0.3}} /></TouchableOpacity>
-          <TouchableOpacity onPress={()=>{setAddMode(false)}}><AntDesign name="minus" size={46} style={{top: -2, opacity: isAddMode? 0.3: 1}} /></TouchableOpacity>
+        <View style={styles.moneyContainer}>
+          <Text style={styles.moneyTitle}>TOTAL</Text>
+          <Text style={styles.money}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
         </View>
-        <TouchableOpacity style={{...styles.rect, backgroundColor: theme.green}} onPress={()=>{isAddMode? addMoney(1000) : spendMoney(1000);}}><Text style={styles.rectText}>\</Text></TouchableOpacity>
-        <TouchableOpacity style={{...styles.rect, backgroundColor: theme.pink}} onPress={()=>{isAddMode? addMoney(5000) : spendMoney(5000);}}><Text style={styles.rectText}>\ \ \ \ \</Text></TouchableOpacity>
-        <TouchableOpacity style={{...styles.rect, backgroundColor: theme.red}} onPress={()=>{isAddMode? addMoney(10000) : spendMoney(10000);}}><Text style={styles.rectText}>\ \ \ \ \ \ \ \ \ \</Text></TouchableOpacity>
+        
+        <View style={styles.moneyContainer}>
+          <View style={{flexDirection:'row', justifyContent:"space-between"}}>
+            <Text style={styles.moneyTitle}>TODAY</Text>
+            <TouchableOpacity style={styles.refresh} onPress={()=>{newDay()}}><MaterialCommunityIcons color={theme.c0} name="autorenew" size={28} /></TouchableOpacity>
+          </View>
+          <Text style={styles.money}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
+        </View>
+
+        <View style={styles.rects}>
+          <TouchableOpacity style={styles.operator} onPress={()=>{isAddMode? setAddMode(false):setAddMode(true)}}><AntDesign name={isAddMode? "plus":"minus"} size={32} /></TouchableOpacity>
+          <TouchableOpacity style={{...styles.rect}} onPress={()=>{isAddMode? addMoney(1000) : spendMoney(1000);}}><Text style={styles.rectText}>1</Text></TouchableOpacity>
+          <TouchableOpacity style={{...styles.rect}} onPress={()=>{isAddMode? addMoney(5000) : spendMoney(5000);}}><Text style={styles.rectText}>5</Text></TouchableOpacity>
+          <TouchableOpacity style={{...styles.rect}} onPress={()=>{isAddMode? addMoney(10000) : spendMoney(10000);}}><Text style={styles.rectText}>10</Text></TouchableOpacity>
+        </View>
       </View>
     </View>
   );

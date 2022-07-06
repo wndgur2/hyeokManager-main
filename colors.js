@@ -1,8 +1,9 @@
 export const theme = {
-  bg: "#FF9D0A",
-  darkBg: "#F49200",
-  darkBg2: "#EE8C00",
-  green: "#BABD8D",
-  pink: "#FFDAC6",
-  red: "#EB6424",
+  b0:"#FFF3DA",
+  c0:"#FFebad",
+  c1:"#FFDd93",
+  c2:"#FFB677",
+  c3:"#FF8364",
+  c4:"#616F39",
+  c5:"#111F00",
 };
