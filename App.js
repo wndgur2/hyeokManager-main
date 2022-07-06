@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor={theme.bg} barStyle="light-content" />
+      <StatusBar backgroundColor={theme.darkBg} barStyle="dark-content" />
       <Stack.Navigator screenOptions={{presentation:"modal", headerShown:false}}>
         <Stack.Screen name="Tabs" component={TabsNav} />
       </Stack.Navigator>

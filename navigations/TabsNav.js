@@ -16,8 +16,10 @@ export default function TabsNav() {
   return (
     <Tabs.Navigator
       screenOptions={{
-        headerShown:false,
-        activeTintColor: "white",
+        headerShown:true,
+        headerStyle:{
+          backgroundColor:theme.darkBg,
+        },
         tabBarInactiveTintColor: "black",
         tabBarActiveBackgroundColor: theme.bg,
         tabBarActiveTintColor: "white",
@@ -29,7 +31,7 @@ export default function TabsNav() {
       }}
     >
       <Tabs.Screen
-        name="돈"
+        name="Money"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"card"} color={color} focused={focused} />
@@ -43,7 +45,7 @@ export default function TabsNav() {
       </Tabs.Screen>
 
       <Tabs.Screen
-        name="내역"
+        name="Expense"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"list-outline"} color={color} focused={focused} />
@@ -57,7 +59,7 @@ export default function TabsNav() {
       </Tabs.Screen>
 
       <Tabs.Screen
-        name="메모"
+        name="Memos"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"create-outline"} color={color} focused={focused} />

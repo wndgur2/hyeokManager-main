@@ -158,8 +158,7 @@ export default function Memos() {
 
   return (
     <ScreenLayout>
-      <View style={{ backgroundColor:theme.bg, paddingVertical:12}}><Text style={{fontSize:32, textAlign:"center", color:theme.pink}}>MEMOS</Text></View>
-      <View style={{height:"83%"}}>
+      <View style={{top: 10, height:"83%"}}>
         <FlatList
           data={memos}
           renderItem={renderMemo}

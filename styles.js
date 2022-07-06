@@ -11,45 +11,28 @@ export default styles = StyleSheet.create({
     padding:0,
   },
 
-  totalText:{
+  moneyContainer: {
+    paddingVertical:"2%",
+    paddingHorizontal:"1%",
+  },
+
+  moneyTitle:{
     fontStyle: "normal",
     fontWeight: "400",
-    fontSize: 32,
-    lineHeight: 48,
-    letterSpacing: 5,
-    textAlign: "right",
+    fontSize: 24,
+    letterSpacing: 2,
 
-    color: "#FFFFFF",
+    color: "white",
     zIndex: 0,
   },
 
-  totalMoney:{
-    top: -20,
+  money:{
     fontStyle: "normal",
     fontWeight: "400",
-    fontSize: 52,
-    letterSpacing: 10,
-    textAlign: "right",
+    fontSize: 36,
+    letterSpacing: 4,
 
-    color: "#2b2b2b",
-    zIndex: 1,
-  },
-
-  todayText:{
-    fontStyle: "normal",
-    fontWeight: "400",
-    fontSize: 40,
-    letterSpacing: 5,
-
-    color: "#FFFFFF",
-  },
-
-  todayMoney:{
-    top: -20,
-    width: "120%",
-    fontSize: 72,
-    letterSpacing: 10,
-    color: "#000000",
+    color: "black",
     zIndex: 1,
   },
 
@@ -61,7 +44,7 @@ export default styles = StyleSheet.create({
 
   rect:{
     width: "100%",
-    height: 70,
+    height: 67,
     left: 0,
     justifyContent: "center",
     alignItems:"center",

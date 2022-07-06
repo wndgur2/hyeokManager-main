@@ -85,22 +85,22 @@ export default function Money() {
     <View style={styles.container}>
       <View style={{paddingHorizontal:10, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
         <View style={{width:"7%"}}></View>
-        <Text style={{textAlign:"center", fontSize:30, paddingTop:9,}}>D-{typeof(dDay) == "number"? dDay : "Loading..."}</Text>
-        <TouchableOpacity style={{top:20, width:"7%"}} onPress={reset}><AntDesign name="exclamationcircle" size={22} /></TouchableOpacity>
+        <Text style={{textAlign:"center", fontSize:26, paddingTop:"2%",}}>D-{typeof(dDay) == "number"? dDay : "Loading..."}</Text>
+        <TouchableOpacity style={{paddingTop:"4%", width:"7%"}} onPress={reset}><AntDesign name="exclamationcircle" size={22} /></TouchableOpacity>
       </View>
 
-      <View style={{paddingTop: "3%",}}>
-        <Text style={styles.totalText}>TOTAL</Text>
-        <Text style={styles.totalMoney}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
+      <View style={styles.moneyContainer}>
+        <Text style={styles.moneyTitle}>TOTAL</Text>
+        <Text style={styles.money}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
       </View>
       
-      <View style= {{paddingVertical:"20%",}}>
-        <View style={{ padding:8, flexDirection:'row', justifyContent:"flex-start"}}>
-          <Text style={styles.todayText}>TODAY</Text>
-          <TouchableOpacity style={{ top:"3%" }} onPress={newDay}><MaterialCommunityIcons color={"white"} name="autorenew" size={32} /></TouchableOpacity>
+      <View style={styles.moneyContainer}>
+        <View style={{flexDirection:'row', justifyContent:"flex-start"}}>
+          <Text style={styles.moneyTitle}>TODAY</Text>
+          <TouchableOpacity style={{ left:"30%", borderRadius:10, backgroundColor:theme.darkBg2 }} onPress={newDay}><MaterialCommunityIcons color={"white"} name="autorenew" size={32} /></TouchableOpacity>
           <View></View>
         </View>
-        <Text style={styles.todayMoney}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
+        <Text style={styles.money}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
       </View>
 
       <View style={styles.rects}>
