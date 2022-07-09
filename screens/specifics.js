@@ -8,12 +8,13 @@ import { theme } from '../colors';
 export default function Specifics() {
   NavigationBar.setBackgroundColorAsync(theme.c5);
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <Text>
-          Specifics
-        </Text>
+    <View style={styles.container}>
+      <View style={styles.roundedContainer}>
+        <View style={styles.billCard}>
+          <Text style={styles.billCardText}>bill for 1</Text>
+        </View>
       </View>
-    </SafeAreaView>
+
+    </View>
   );
 }

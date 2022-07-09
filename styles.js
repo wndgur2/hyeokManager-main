@@ -30,6 +30,13 @@ export default styles = StyleSheet.create({
     borderWidth:0,
   },
 
+  roundedContainer:{
+    borderRadius:25,
+    "flex": 1,
+    backgroundColor: theme.c0,
+    width: "100%",
+  },
+
   bottomLeft:{
     position:"absolute",
     width:"50%",
@@ -56,13 +63,6 @@ export default styles = StyleSheet.create({
     width:"50%",
     height:"50%",
     right:0,
-  },
-
-  roundedContainer:{
-    borderRadius:24,
-    "flex": 1,
-    backgroundColor: theme.c0,
-    width: "100%",
   },
 
   refresh:{
@@ -100,37 +100,49 @@ export default styles = StyleSheet.create({
   rects:{
     position: "absolute",
     bottom:0,
-    width: "14%",
     right:0,
+    
+    paddingHorizontal:"2%",
+    paddingVertical: 10,
+
     backgroundColor:theme.c1,
-    borderTopLeftRadius:24,
+    borderTopLeftRadius:16,
     justifyContent:"center",
     alignItems:"center",
   },
 
   rect:{
-    width: "80%",
-    height: 40,
-    left: 0,
-    marginVertical:4,
+    marginVertical:5,
+    paddingVertical:6,
+    width:"80%",
     justifyContent: "center",
     alignItems:"center",
-    backgroundColor:theme.c0,
-    borderRadius:24,
+    backgroundColor:theme.c0_2,
   },
 
   rectText:{
     fontStyle: "normal",
     fontWeight: "100",
     fontSize: 20,
-    color: "black",
+    color: theme.c5,
     display: "flex",
   },
 
   operator:{
     alignItems:"center",
     justifyContent:"center",
-    paddingHorizontal:5,
-    paddingVertical:8,
+    paddingVertical:5,
+  },
+
+  billCard:{
+    alignItems:"center",
+    backgroundColor: theme.c4,
+    borderRadius:25,
+    margin:5,
+  },
+
+  billCardText:{
+    fontSize:32,
+    color:theme.b0,
   }
 });
