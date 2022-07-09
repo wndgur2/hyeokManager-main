@@ -21,9 +21,8 @@ export default styles = StyleSheet.create({
   },
 
   container: {
-    "flex": 2,
+    "flex": 1,
     backgroundColor: theme.c1,
-    width: "100%",
     overflow:"hidden",
     margin:0,
     padding:0,
@@ -31,25 +30,29 @@ export default styles = StyleSheet.create({
   },
 
   roundedContainer:{
-    borderRadius:25,
+    borderBottomLeftRadius:25,
+    borderBottomRightRadius:25,
     "flex": 1,
     backgroundColor: theme.c0,
     width: "100%",
+    borderWidth:0,
   },
 
   bottomLeft:{
     position:"absolute",
     width:"50%",
     height:"50%",
-    bottom:0,
+    bottom:-5,
+    borderWidth:0,
   },
 
   bottomRight:{
     position:"absolute",
     width:"50%",
     height:"50%",
-    bottom:0,
+    bottom:-5,
     right:0,
+    borderWidth:0,
   },
 
   topLeft:{
@@ -74,16 +77,16 @@ export default styles = StyleSheet.create({
   },
 
   moneyContainer: {
-    paddingVertical:"3%",
-    paddingHorizontal:"4%",
+    paddingVertical:"2%",
+    paddingHorizontal:"3%",
     backgroundColor: theme.b0,
     borderRadius:23,
-    margin:10,
+    margin:8,
   },
 
   moneyTitle:{
     fontStyle: "normal",
-    fontSize: 24,
+    fontSize: 20,
     color: "black",
     zIndex: 0,
   },
@@ -91,7 +94,7 @@ export default styles = StyleSheet.create({
   money:{
     fontStyle: "normal",
     fontWeight: "400",
-    fontSize: 32,
+    fontSize: 28,
     letterSpacing: 2,
     color: "black",
     zIndex: 1,
@@ -136,13 +139,18 @@ export default styles = StyleSheet.create({
 
   billCard:{
     alignItems:"center",
-    backgroundColor: theme.c4,
+    backgroundColor: theme.b0,
     borderRadius:25,
     margin:5,
   },
 
   billCardText:{
     fontSize:32,
-    color:theme.b0,
-  }
+    color:theme.c5,
+  },
+
+  rowIndex: {
+    fontSize:20,
+
+  },
 });

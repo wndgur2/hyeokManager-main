@@ -13,11 +13,10 @@ import styles from './styles';
 const Stack = createStackNavigator();
 
 export default function App() {
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   NavigationBar.setBackgroundColorAsync(theme.c5);  
   return (
-    <NavigationContainer onStateChange={()=>{LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);}}>
-      <StatusBar backgroundColor={theme.c1} barStyle="dark-content" />
+    <NavigationContainer>
+      <StatusBar backgroundColor={theme.c5} barStyle="light-content" />
       <Stack.Navigator screenOptions={{presentation:"card", headerShown:false}}>
         <Stack.Screen name="Tabs" component={TabsNav}/>
       </Stack.Navigator>

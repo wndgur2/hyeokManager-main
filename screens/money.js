@@ -6,12 +6,14 @@ import * as NavigationBar from 'expo-navigation-bar';
 import { StatusBar } from 'expo-status-bar';
 import { theme } from '../colors';
 import styles from '../styles';
+import Title from "../components/Title";
 
 export default function Money() {
 
   const TOTAL_MONEY_STORAGE_KEY = '@total';
   const TODAY_MONEY_STORAGE_KEY = '@today';
   const LAST_DATE_STORAGE_KEY = '@lastDate';
+  const EXPENSES_STORAGE_KEY = '@expenses';
 
   NavigationBar.setBackgroundColorAsync(theme.c5);
   const [todayMoney, setTodayMoney] = useState(0);
@@ -20,13 +22,16 @@ export default function Money() {
   const [dDay, setDDay] = useState(0);
   const [isAddMode, setAddMode] = useState(false);  
   const [isLoading, setLoading] = useState(true);
+  const [expenses, setExpenses] = useState(new Array());
 
   const loadData = async () => {
     try{
       const totalStr = await AsyncStorage.getItem(TOTAL_MONEY_STORAGE_KEY);
       const todayStr = await AsyncStorage.getItem(TODAY_MONEY_STORAGE_KEY);
+      const tExpenses = await AsyncStorage.getItem(EXPENSES_STORAGE_KEY);
       if(totalStr) setTotalMoney(parseInt(totalStr));
       if(todayStr) setTodayMoney(parseInt(todayStr));
+      if(tExpenses) setExpenses(JSON.parse(tExpenses));
     } catch(e){
       console.log(e);
       console.log('loadDataError');
@@ -38,6 +43,7 @@ export default function Money() {
   };
 
   useEffect( () => {
+    loadData();
     const tempDate = new Date().getDate();
     setDate(tempDate);
     setDDay(25-tempDate > 0 ? 25-tempDate : 55-tempDate);
@@ -62,6 +68,10 @@ export default function Money() {
     setTodayMoney(tmpToday);
     saveAsyncStorage(tmpTotal, TOTAL_MONEY_STORAGE_KEY);
     saveAsyncStorage(tmpToday, TODAY_MONEY_STORAGE_KEY);
+    const date = new Date();
+    const tExpenses = [...expenses, ["+"+adding, date.toString().split(' '), date.getTime()]];
+    saveAsyncStorage(tExpenses, EXPENSES_STORAGE_KEY);
+    setExpenses(tExpenses);
   }
 
   const spendMoney = (spending) => {
@@ -72,19 +82,27 @@ export default function Money() {
     setTodayMoney(tmpToday);
     saveAsyncStorage(tmpTotal, TOTAL_MONEY_STORAGE_KEY);
     saveAsyncStorage(tmpToday, TODAY_MONEY_STORAGE_KEY);
+    const date = new Date();  
+    const tExpenses = [...expenses, ["-"+spending, date.toString().split(' '), date.getTime()]];
+    saveAsyncStorage(tExpenses, EXPENSES_STORAGE_KEY);
+    setExpenses(tExpenses)
   }
+
+  console.log("expenses:", expenses);
 
   const reset = ()=>{
     setTotalMoney(500000);
     saveAsyncStorage(500000, TOTAL_MONEY_STORAGE_KEY);
     newDay();
+    saveAsyncStorage([], EXPENSES_STORAGE_KEY);
+    setExpenses([]);
   }
   
   return (
     <View style={styles.container}>
       <View style={{...styles.bottomLeft, backgroundColor:theme.c5}}></View>
       <View style={styles.roundedContainer}>
-
+        <Title>finance</Title>
         <View style={styles.moneyContainer}>
           <Text style={styles.moneyTitle}>TOTAL</Text>
           <Text style={styles.money}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>

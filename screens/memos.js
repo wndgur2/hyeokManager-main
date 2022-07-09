@@ -8,6 +8,7 @@ import ScreenLayout from "../auth/ScreenLayout";
 import { TextInput } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "../styles";
+import Title from "../components/Title";
 
 export default function Memos() {
   NavigationBar.setBackgroundColorAsync(theme.c5);
@@ -68,10 +69,9 @@ export default function Memos() {
 
     const index = newMemos.findIndex(m=>m[0]==newMemo[0]);
 
-    for(let i=index; i>0; i--){
-      console.log("i=", i);
+    for(let i=index; i>0; i--)
       newMemos[i] = newMemos[i-1];
-    }
+      
     newMemos[0] = newMemo;
     newMemos[0][2] = true;
     setMemos(newMemos);
@@ -144,13 +144,23 @@ export default function Memos() {
         </View> 
         :
         <TouchableOpacity 
-          style={{padding:5}}
+          style={{
+            padding:5,
+          }}
           
           onPress={() => {
             LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
             isRemoveMode?removeMemo(memo):editMemo(memo);
           }}>
-          <Text style={{paddingVertical:5, paddingHorizontal:15, fontSize:20, lineHeight:32, letterSpacing:-1, borderRadius:10, backgroundColor:theme.c0}} numberOfLines={1}>{memo[1]}</Text>
+          <Text style={{
+              paddingVertical:5,
+              paddingHorizontal:15,
+              fontSize:20,
+              lineHeight:32,
+              letterSpacing:-1,
+              borderRadius:10,
+              backgroundColor:theme.c1,
+            }} numberOfLines={1}>{memo[1]}</Text>
         </TouchableOpacity>
         )}
       </View>
@@ -161,6 +171,7 @@ export default function Memos() {
     <ScreenLayout>
       <View style={{...styles.bottomRight, backgroundColor:theme.c5}}></View>
       <View style={styles.roundedContainer}>
+        <Title>memos</Title>
         <View style={{maxHeight:"90%"}}>
           <FlatList
             data={memos}
@@ -170,7 +181,8 @@ export default function Memos() {
           />
         </View>
         
-        <View style={{...styles.rects, backgroundColor:theme.c5, paddingTop:18, paddingBottom:10, justifyContent:"space-between", height:"15%"}}>
+        <View style={{...styles.rects,
+        backgroundColor:theme.c5, paddingTop:18, paddingBottom:10, justifyContent:"space-between", height:"15%"}}>
           <TouchableOpacity style={{backgroundColor:theme.c4_2,}} onPress={()=>{addMemo();}}><AntDesign name="plus" color={theme.c0} size={32}/></TouchableOpacity>
           <TouchableOpacity style={{backgroundColor:theme.c4_2,}} onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}><AntDesign name="minus" size={32} color={isRemoveMode? theme.c3: theme.c0} /></TouchableOpacity>
         </View>
