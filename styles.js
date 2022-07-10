@@ -2,24 +2,6 @@ import {StyleSheet} from "react-native";
 import { theme} from "./colors";
 
 export default styles = StyleSheet.create({
-  tabNavBackgroundContainer:{
-    flex:1,
-    display:"flex",
-    position:"absolute",
-    backgroundColor:"blue",
-    width:"100%",
-    height:"6%",
-    bottom:0,
-  },
-
-  tabNavBackground:{
-    position:"absolute",
-    width:"100%",
-    height:"3%",
-    flex:1,
-    bottom:0,
-  },
-
   container: {
     "flex": 1,
     backgroundColor: theme.c1,
@@ -104,23 +86,24 @@ export default styles = StyleSheet.create({
     position: "absolute",
     bottom:0,
     right:0,
+    height:"30%",
+    width:"13%",
     
-    paddingHorizontal:"2%",
-    paddingVertical: 10,
+    paddingLeft:"6%",
 
-    backgroundColor:theme.c1,
-    borderTopLeftRadius:16,
-    justifyContent:"center",
+    backgroundColor:theme.c4,
+    borderTopLeftRadius:19,
+    justifyContent:"space-evenly",
     alignItems:"center",
   },
 
   rect:{
-    marginVertical:5,
-    paddingVertical:6,
     width:"80%",
+    height:"17%",
     justifyContent: "center",
     alignItems:"center",
-    backgroundColor:theme.c0_2,
+    backgroundColor:theme.b0,
+    borderRadius:13,
   },
 
   rectText:{
@@ -129,12 +112,6 @@ export default styles = StyleSheet.create({
     fontSize: 20,
     color: theme.c5,
     display: "flex",
-  },
-
-  operator:{
-    alignItems:"center",
-    justifyContent:"center",
-    paddingVertical:5,
   },
 
   billCard:{
@@ -150,7 +127,7 @@ export default styles = StyleSheet.create({
   },
 
   rowIndex: {
-    fontSize:20,
+    fontSize:17,
 
   },
 });

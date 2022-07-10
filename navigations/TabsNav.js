@@ -24,21 +24,20 @@ export default function TabsNav() {
         tabBarInactiveTintColor: "black",
         tabBarActiveBackgroundColor: theme.c5,
         tabBarActiveTintColor: theme.c0,
-        tabBarInactiveBackgroundColor: theme.c1,
+        tabBarInactiveBackgroundColor: theme.c4,
         tabBarLabelStyle:{
           fontSize:12,
           top:"-5%",
-        },        
+        },
         tabBarStyle:{
-          height:"6%",
           borderTopWidth:0,
-          backgroundColor:theme.c1,
+          backgroundColor:theme.c4,
           elevation: 0.0,
         },
       }}
     >
       <Tabs.Screen
-        name="Money"
+        name="Finance"
         options={{
           tabBarItemStyle:{
             borderTopRightRadius:24,
@@ -54,24 +53,7 @@ export default function TabsNav() {
           <Stack.Screen name="money" component={Money} options={{headerShown: false,}}/>
         </Stack.Navigator>}
       </Tabs.Screen>
-
-      <Tabs.Screen
-        name="Expense"
-        options={{
-          tabBarItemStyle:{
-            borderRadius:24,
-          },
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName={"list-outline"} color={color} focused={focused} />
-          ),
-        }}
-      >
-        {() =>
-        <Stack.Navigator>
-          <Stack.Screen name="expense" component={Expense} options={{headerShown: false,}}/>
-        </Stack.Navigator>}
-      </Tabs.Screen>
-
+      
       <Tabs.Screen
         name="Memos"
         options={{

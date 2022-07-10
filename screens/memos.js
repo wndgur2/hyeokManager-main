@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { FlatList, Platform, Text, View, TouchableOpacity, LayoutAnimation, UIManager} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AntDesign} from "@expo/vector-icons";
@@ -182,10 +182,56 @@ export default function Memos() {
         </View>
         
         <View style={{...styles.rects,
-        backgroundColor:theme.c5, paddingTop:18, paddingBottom:10, justifyContent:"space-between", height:"15%"}}>
-          <TouchableOpacity style={{backgroundColor:theme.c4_2,}} onPress={()=>{addMemo();}}><AntDesign name="plus" color={theme.c0} size={32}/></TouchableOpacity>
-          <TouchableOpacity style={{backgroundColor:theme.c4_2,}} onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}><AntDesign name="minus" size={32} color={isRemoveMode? theme.c3: theme.c0} /></TouchableOpacity>
+          backgroundColor:theme.c5,
+          width:"13%",
+        }}>
+          <TouchableOpacity style={{
+            backgroundColor:theme.c4_3,
+            borderRadius:12,
+            height:"40%",
+            width:"80%",
+            alignItems:"center",
+            justifyContent:"center",
+            left:1,
+          }}
+           onPress={()=>{addMemo();}}>
+            <AntDesign name="plus" color={theme.c0} size={32}/>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={{
+            backgroundColor:theme.c4_3,
+            borderRadius:12,
+            height:"40%",
+            width:"80%",
+            alignItems:"center",
+            justifyContent:"center",
+            left:1,
+          }}
+           onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}>
+            <AntDesign name="minus" size={32} color={isRemoveMode? theme.c3: theme.c0} />
+          </TouchableOpacity>
         </View>
+
+        <View style={{
+          position:"absolute",
+          width: "87%",
+          backgroundColor:theme.c0,
+          bottom:0,
+          right:"13%",
+          height:"3%",
+          zIndex: -1,
+          borderBottomLeftRadius:25,
+          borderBottomRightRadius:25,
+        }} />
+        <View style={{
+          position:"absolute",
+          width: "10%",
+          backgroundColor:theme.c5,
+          bottom:0,
+          right:"13%",
+          height:"3%",
+          zIndex: -2,
+        }} />
       </View>
     </ScreenLayout>
   );

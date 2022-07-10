@@ -13,23 +13,23 @@ export default function Bill({ cost, time, children }) {
       style={{
         alignItems: "center",
         justifyContent: "space-between",
-        borderRadius: 25,
-        marginVertical:12,
+        marginVertical:8.5,
         marginHorizontal:20,
-        backgroundColor: theme.b0,
         flexDirection:"row",
       }}
     >
       <Text 
         style={{
           color:theme.c5,
-          backgroundColor:theme.b0,
+          backgroundColor: parseInt(cost)>0?theme.c3:theme.c4,
           fontSize:18,
           width:"50%",
+          height:"100%",
           borderBottomLeftRadius:25,
           borderTopLeftRadius:25,
           paddingHorizontal:20,
           textAlign:"center",
+          textAlignVertical:"center",
         }}
       >
         {cost} 원
@@ -44,7 +44,7 @@ export default function Bill({ cost, time, children }) {
         borderBottomRightRadius:25,
         borderTopRightRadius:25,
         paddingHorizontal:20,
-        paddingVertical:10,
+        paddingVertical:3,
         textAlign:"center",
       }}
       >
