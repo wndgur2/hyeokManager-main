@@ -16,9 +16,6 @@ const Stack = createStackNavigator();
 export default function TabsNav() {
   return (
     <Tabs.Navigator
-      sceneContainerStyle={{
-        borderWidth:0,
-      }}
       screenOptions={{
         headerShown:false,
         tabBarInactiveTintColor: "black",
@@ -39,10 +36,6 @@ export default function TabsNav() {
       <Tabs.Screen
         name="Finance"
         options={{
-          tabBarItemStyle:{
-            borderTopRightRadius:24,
-            borderBottomRightRadius:24,
-          },
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"card"} color={color} focused={focused}/>
           ),
@@ -57,10 +50,6 @@ export default function TabsNav() {
       <Tabs.Screen
         name="Memos"
         options={{
-          tabBarItemStyle:{
-            borderTopLeftRadius: 24,
-            borderBottomLeftRadius: 24,
-          },
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"create-outline"} color={color} focused={focused} />
           ),

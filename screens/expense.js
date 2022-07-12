@@ -64,7 +64,7 @@ export default function Expense() {
             extraData={expenses}
           />
         </View>
-        <TouchableOpacity onPress={()=>{deleteExpesnses();}} style={{alignItems:"center"}}><Text style={{fontSize:20, margin:20, padding:8, borderRadius:24, backgroundColor:theme.c5, color:theme.c3, width: "70%", textAlign:"center"}}>Delete all expenses</Text></TouchableOpacity>
+        <TouchableOpacity onPress={()=>{deleteExpesnses();}} style={{alignItems:"center"}}><Text style={{fontSize:20, margin:20, padding:8, backgroundColor:theme.c5, color:theme.c3, width: "70%", textAlign:"center"}}>Delete all expenses</Text></TouchableOpacity>
       </View>
 
     </View>

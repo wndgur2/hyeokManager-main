@@ -21,7 +21,7 @@ export default function Bill({ cost, time, children }) {
       <Text 
         style={{
           color:theme.c5,
-          backgroundColor: parseInt(cost)>0?theme.c3:theme.c4,
+          backgroundColor: parseInt(cost)>0?theme.c2:theme.c4,
           fontSize:18,
           width:"50%",
           height:"100%",

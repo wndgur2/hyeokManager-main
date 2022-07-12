@@ -11,58 +11,17 @@ export default styles = StyleSheet.create({
     borderWidth:0,
   },
 
-  roundedContainer:{
-    borderBottomLeftRadius:25,
-    borderBottomRightRadius:25,
-    "flex": 1,
-    backgroundColor: theme.c0,
-    width: "100%",
-    borderWidth:0,
-  },
-
-  bottomLeft:{
-    position:"absolute",
-    width:"50%",
-    height:"50%",
-    bottom:-5,
-    borderWidth:0,
-  },
-
-  bottomRight:{
-    position:"absolute",
-    width:"50%",
-    height:"50%",
-    bottom:-5,
-    right:0,
-    borderWidth:0,
-  },
-
-  topLeft:{
-    position:"absolute",
-    width:"50%",
-    height:"50%",
-  },
-
-  topRight:{
-    position:"absolute",
-    width:"50%",
-    height:"50%",
-    right:0,
-  },
-
   refresh:{
-    width:"14%",
+    width:"30%",
     alignItems:"center",
     justifyContent:"center",
-    borderRadius:20,
     backgroundColor:theme.c5,
   },
 
   moneyContainer: {
     paddingVertical:"2%",
-    paddingHorizontal:"3%",
+    paddingHorizontal:"6%",
     backgroundColor: theme.b0,
-    borderRadius:23,
     margin:8,
   },
 
@@ -83,27 +42,18 @@ export default styles = StyleSheet.create({
   },
 
   rects:{
-    position: "absolute",
-    bottom:0,
-    right:0,
-    height:"30%",
-    width:"13%",
-    
-    paddingLeft:"6%",
-
-    backgroundColor:theme.c4,
-    borderTopLeftRadius:19,
-    justifyContent:"space-evenly",
     alignItems:"center",
+    flexDirection:"row",
+    justifyContent:"space-evenly",
+    width:"100%"
   },
 
   rect:{
-    width:"80%",
-    height:"17%",
-    justifyContent: "center",
+    width:"20%",
     alignItems:"center",
-    backgroundColor:theme.b0,
-    borderRadius:13,
+    backgroundColor:theme.c4,
+    padding:5,
+    margin:5,
   },
 
   rectText:{
@@ -117,17 +67,11 @@ export default styles = StyleSheet.create({
   billCard:{
     alignItems:"center",
     backgroundColor: theme.b0,
-    borderRadius:25,
     margin:5,
   },
 
   billCardText:{
     fontSize:32,
     color:theme.c5,
-  },
-
-  rowIndex: {
-    fontSize:17,
-
   },
 });

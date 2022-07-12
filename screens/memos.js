@@ -124,11 +124,11 @@ export default function Memos() {
   const renderMemo = ({ item: memo }) => {
     return (
       <View style={{alignItems:"center", width:"100%"}}>{(memo[2]?
-        <View style={{margin:25, width:"90%", borderRadius:10, backgroundColor:theme.b0, flexDirection:"row", justifyContent:"space-around"}}>
+        <View style={{paddingHorizontal:10, margin:10, width:"90%", backgroundColor:theme.b0}}>
           <TextInput
-            style={{fontSize:26, margin:5, padding:15, width:"90%", letterSpacing:1, lineHeight:36}}
+            style={{fontSize:22, margin:3, padding:10, width:"90%", letterSpacing:1, lineHeight:36}}
             multiline={true}
-            placeholder="input text."
+            placeholder="무슨 메모를 하시렵니까?"
             blurOnSubmit={true}
             value={tempMemo}
             onSubmitEditing={() => {
@@ -158,8 +158,7 @@ export default function Memos() {
               fontSize:20,
               lineHeight:32,
               letterSpacing:-1,
-              borderRadius:10,
-              backgroundColor:theme.c1,
+              backgroundColor:theme.c1_2,
             }} numberOfLines={1}>{memo[1]}</Text>
         </TouchableOpacity>
         )}
@@ -169,7 +168,7 @@ export default function Memos() {
 
   return (
     <ScreenLayout>
-      <View style={{...styles.bottomRight, backgroundColor:theme.c5}}></View>
+      <View style={{...styles.bottomLeft, backgroundColor:theme.c4}}></View>
       <View style={styles.roundedContainer}>
         <Title>memos</Title>
         <View style={{maxHeight:"90%"}}>
@@ -182,56 +181,19 @@ export default function Memos() {
         </View>
         
         <View style={{...styles.rects,
-          backgroundColor:theme.c5,
-          width:"13%",
+          backgroundColor:theme.c4,
+          padding:3,
+          marginTop:10,
         }}>
-          <TouchableOpacity style={{
-            backgroundColor:theme.c4_3,
-            borderRadius:12,
-            height:"40%",
-            width:"80%",
-            alignItems:"center",
-            justifyContent:"center",
-            left:1,
-          }}
-           onPress={()=>{addMemo();}}>
-            <AntDesign name="plus" color={theme.c0} size={32}/>
+          <TouchableOpacity
+            onPress={()=>{addMemo();}}>
+            <AntDesign name="plus" color={theme.c5} size={32}/>
           </TouchableOpacity>
-
-          <TouchableOpacity style={{
-            backgroundColor:theme.c4_3,
-            borderRadius:12,
-            height:"40%",
-            width:"80%",
-            alignItems:"center",
-            justifyContent:"center",
-            left:1,
-          }}
-           onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}>
-            <AntDesign name="minus" size={32} color={isRemoveMode? theme.c3: theme.c0} />
+          <TouchableOpacity
+            onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}>
+            <AntDesign name="minus" size={32} color={isRemoveMode? theme.c3: theme.c5} />
           </TouchableOpacity>
         </View>
-
-        <View style={{
-          position:"absolute",
-          width: "87%",
-          backgroundColor:theme.c0,
-          bottom:0,
-          right:"13%",
-          height:"3%",
-          zIndex: -1,
-          borderBottomLeftRadius:25,
-          borderBottomRightRadius:25,
-        }} />
-        <View style={{
-          position:"absolute",
-          width: "10%",
-          backgroundColor:theme.c5,
-          bottom:0,
-          right:"13%",
-          height:"3%",
-          zIndex: -2,
-        }} />
       </View>
     </ScreenLayout>
   );
