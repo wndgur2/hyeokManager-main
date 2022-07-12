@@ -12,7 +12,8 @@ export default styles = StyleSheet.create({
   },
 
   refresh:{
-    width:"30%",
+    width:"27%",
+    left:14,
     alignItems:"center",
     justifyContent:"center",
     backgroundColor:theme.c5,

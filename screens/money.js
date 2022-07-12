@@ -17,6 +17,7 @@ export default function Money() {
   const LAST_DATE_STORAGE_KEY = '@lastDate';
   const EXPENSES_STORAGE_KEY = '@expenses';
   const PAYMENT_STORAGE_KEY = "@payment";
+  const PAY_TERM_STORAGE_KEY = "@payTerm";
 
   NavigationBar.setBackgroundColorAsync(theme.c5);
   const [todayMoney, setTodayMoney] = useState(0);
@@ -27,6 +28,8 @@ export default function Money() {
   const [isLoading, setLoading] = useState(true);
   const [expenses, setExpenses] = useState([]);
   const [payment, setPayment] = useState();
+  const [payTerm, setPayTerm] = useState();
+  const [isEdittingPayment, setEdittingPayment] = useState(false);
 
   const expenseFlist = useRef();
 
@@ -116,15 +119,15 @@ export default function Money() {
         <ScrollView nestedScrollEnabled>
           <View style={{ paddingBottom:30,}}>
             <View style={{flexDirection:"row", justifyContent:"space-around"}}>
-              <View style={{...styles.moneyContainer, width:"40%"}}>
+              <View style={{...styles.moneyContainer, width:"44%"}}>
                 <Text style={styles.moneyTitle}>TOTAL</Text>
                 <Text style={styles.money}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
                 </View>
 
-              <View style={{...styles.moneyContainer, width:"48%"}}>
+              <View style={{...styles.moneyContainer, width:"44%"}}>
                 <View style={{flexDirection:'row', justifyContent:"space-between"}}>
                   <Text style={styles.moneyTitle}>TODAY</Text>
-                  <TouchableOpacity style={styles.refresh} onPress={()=>{newDay()}}><MaterialCommunityIcons color={theme.b0} name="autorenew" size={28} /></TouchableOpacity>
+                  <TouchableOpacity style={styles.refresh} onPress={()=>{newDay()}}><MaterialCommunityIcons color={theme.b0} name="autorenew" size={24} /></TouchableOpacity>
                 </View>
                 <Text style={styles.money}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
               </View>
