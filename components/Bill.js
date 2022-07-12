@@ -25,8 +25,6 @@ export default function Bill({ cost, time, children }) {
           fontSize:18,
           width:"50%",
           height:"100%",
-          borderBottomLeftRadius:25,
-          borderTopLeftRadius:25,
           paddingHorizontal:20,
           textAlign:"center",
           textAlignVertical:"center",
@@ -38,11 +36,9 @@ export default function Bill({ cost, time, children }) {
       <Text 
       style={{
         color:theme.c5,
-        backgroundColor:theme.c1,
+        backgroundColor:theme.c0,
         fontSize:16,
         width:"50%",
-        borderBottomRightRadius:25,
-        borderTopRightRadius:25,
         paddingHorizontal:20,
         paddingVertical:3,
         textAlign:"center",

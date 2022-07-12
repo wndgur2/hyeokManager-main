@@ -6,9 +6,7 @@ import { StackView } from "@react-navigation/stack";
 import TabIcon from "./TabIcon";
 import {theme} from "../colors";
 import Money from "../screens/money";
-import Specifics from "../screens/expense";
 import Memos from "../screens/memos";
-import Expense from "../screens/expense";
 
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -18,10 +16,10 @@ export default function TabsNav() {
     <Tabs.Navigator
       screenOptions={{
         headerShown:false,
-        tabBarInactiveTintColor: "black",
-        tabBarActiveBackgroundColor: theme.c5,
-        tabBarActiveTintColor: theme.c0,
-        tabBarInactiveBackgroundColor: theme.c4,
+        tabBarInactiveTintColor: theme.c1,
+        tabBarActiveBackgroundColor: theme.c1,
+        tabBarActiveTintColor: theme.c5,
+        tabBarInactiveBackgroundColor: theme.c5,
         tabBarLabelStyle:{
           fontSize:12,
           top:"-5%",

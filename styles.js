@@ -45,7 +45,8 @@ export default styles = StyleSheet.create({
     alignItems:"center",
     flexDirection:"row",
     justifyContent:"space-evenly",
-    width:"100%"
+    width:"100%",
+    paddingTop:10,
   },
 
   rect:{

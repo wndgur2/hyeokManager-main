@@ -39,7 +39,6 @@ export default function Memos() {
 
   useEffect( () => {
     loadMemos();
-    console.log(memos);
   }, []);
   
   useEffect( () => {
@@ -84,9 +83,7 @@ export default function Memos() {
     setEditingMemo(memo[0]);
     var newMemos = memos;
     const index = newMemos.findIndex(m=>m[0]==memo[0]);
-    console.log(index);
     for(let i=index; i>0; i--){
-      console.log("i=", i);
       newMemos[i] = newMemos[i-1];
     }
     newMemos[0] = memo;
@@ -168,32 +165,30 @@ export default function Memos() {
 
   return (
     <ScreenLayout>
-      <View style={{...styles.bottomLeft, backgroundColor:theme.c4}}></View>
-      <View style={styles.roundedContainer}>
-        <Title>memos</Title>
-        <View style={{maxHeight:"90%"}}>
-          <FlatList
-            data={memos}
-            renderItem={renderMemo}
-            keyExtractor={(memo) => memo[0]}
-            extraData={memos}
-          />
-        </View>
-        
-        <View style={{...styles.rects,
-          backgroundColor:theme.c4,
-          padding:3,
-          marginTop:10,
-        }}>
-          <TouchableOpacity
-            onPress={()=>{addMemo();}}>
-            <AntDesign name="plus" color={theme.c5} size={32}/>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}>
-            <AntDesign name="minus" size={32} color={isRemoveMode? theme.c3: theme.c5} />
-          </TouchableOpacity>
-        </View>
+      <Title>memos</Title>
+      <View style={{height:"90%"}}>
+        <FlatList
+          data={memos}
+          renderItem={renderMemo}
+          keyExtractor={(memo) => memo[0]}
+          extraData={memos}
+        />
+      </View>
+      
+      <View style={{...styles.rects,
+        flex:1,
+        justifyContent:"space-around",
+        backgroundColor:theme.c4,
+        flexDirection:"row",
+      }}>
+        <TouchableOpacity
+          onPress={()=>{addMemo();}}>
+          <AntDesign name="plus" color={theme.c5} size={32}/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}>
+          <AntDesign name="minus" size={32} color={isRemoveMode? theme.c3: theme.c5} />
+        </TouchableOpacity>
       </View>
     </ScreenLayout>
   );

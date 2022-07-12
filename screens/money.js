@@ -110,103 +110,98 @@ export default function Money() {
   
   return (
     <View style={styles.container}>
-      <View style={{...styles.bottomLeft, backgroundColor:theme.c5}}></View>
       <View style={styles.roundedContainer}>
         <Title>finance</Title>
 
-        <ScrollView 
-          style={{height:"300%"}}
-          nestedScrollEnabled
-        >
-        <View style={{flexDirection:"row", justifyContent:"space-around"}}>
-          <View style={{...styles.moneyContainer, width:"40%"}}>
-            <Text style={styles.moneyTitle}>TOTAL</Text>
-            <Text style={styles.money}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
+        <ScrollView nestedScrollEnabled>
+          <View style={{ paddingBottom:30,}}>
+            <View style={{flexDirection:"row", justifyContent:"space-around"}}>
+              <View style={{...styles.moneyContainer, width:"40%"}}>
+                <Text style={styles.moneyTitle}>TOTAL</Text>
+                <Text style={styles.money}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
+                </View>
+
+              <View style={{...styles.moneyContainer, width:"48%"}}>
+                <View style={{flexDirection:'row', justifyContent:"space-between"}}>
+                  <Text style={styles.moneyTitle}>TODAY</Text>
+                  <TouchableOpacity style={styles.refresh} onPress={()=>{newDay()}}><MaterialCommunityIcons color={theme.b0} name="autorenew" size={28} /></TouchableOpacity>
+                </View>
+                <Text style={styles.money}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
+              </View>
             </View>
 
-          <View style={{...styles.moneyContainer, width:"48%"}}>
-            <View style={{flexDirection:'row', justifyContent:"space-between"}}>
-              <Text style={styles.moneyTitle}>TODAY</Text>
-              <TouchableOpacity style={styles.refresh} onPress={()=>{newDay()}}><MaterialCommunityIcons color={theme.b0} name="autorenew" size={28} /></TouchableOpacity>
+            <View style={styles.rects}>
+              <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? setAddMode(false):setAddMode(true)}}><AntDesign color={theme.c5} name={isAddMode? "plus":"minus"} size={28} /></TouchableOpacity>
+              <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(1000) : fixMoney(-1000);}}><Text style={styles.rectText}>1</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(5000) : fixMoney(-5000);}}><Text style={styles.rectText}>5</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(10000) : fixMoney(-10000);}}><Text style={styles.rectText}>10</Text></TouchableOpacity>
             </View>
-            <Text style={styles.money}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
-          </View>
-        </View>
 
-        <View style={styles.rects}>
-          <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? setAddMode(false):setAddMode(true)}}><AntDesign color={theme.c5} name={isAddMode? "plus":"minus"} size={28} /></TouchableOpacity>
-          <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(1000) : fixMoney(-1000);}}><Text style={styles.rectText}>1</Text></TouchableOpacity>
-          <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(5000) : fixMoney(-5000);}}><Text style={styles.rectText}>5</Text></TouchableOpacity>
-          <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(10000) : fixMoney(-10000);}}><Text style={styles.rectText}>10</Text></TouchableOpacity>
-        </View>
+            <FlatList
+              style={{height:320}}
+              nestedScrollEnabled
+              data={[...expenses].reverse()}
+              renderItem={renderExpense}
+              keyExtractor={(expense) => expense[2]}
+              extraData={expenses}
+              ref={expenseFlist}
+              showsVerticalScrollIndicator={false}
+            />
 
-        <View
-          style={{
-            maxHeight:"50%",
-            overflow:"hidden",
-            paddingVertical:10,
-            }}
-        >
-          <FlatList
-            nestedScrollEnabled
-            data={[...expenses].reverse()}
-            renderItem={renderExpense}
-            keyExtractor={(expense) => expense[2]}
-            extraData={expenses}
-            ref={expenseFlist}
-            showsVerticalScrollIndicator={false}
-          />
-
-          <TouchableOpacity onPress={()=>{deleteExpesnses();}} style={{alignItems:"center", alignSelf:"center", width:"40%"}}>
-            <Text style={{
-              fontSize:14,
-              marginTop:14,
-              padding:10,
-              backgroundColor:theme.c5,
-              color:theme.b0,
-              textAlign:"center",
-              width:"100%",
-              }}>Delete all records</Text>
-          </TouchableOpacity>
-        </View>
-        
-        <View style={{backgroundColor:theme.c0_2}}>
-          <View style={{paddingHorizontal:10, flexDirection:"row", justifyContent:"space-around", width:"87%"}}>
-            <Text style={{
-              fontSize:24,
-              paddingVertical:"2%",
-              color:theme.c5,
-              textAlignVertical:"center"
-            }}>
-              {typeof(dDay) == "number"? dDay : "Loading..."} day{dDay==1?"":"s"} to go
-            </Text>
-            <TouchableOpacity style={{
-              justifyContent:"center",
-              backgroundColor:theme.c4_3,
-              paddingVertical:10,
-            }} onPress={()=>{reset()}}>
-              <Text style={{color:theme.b0, padding:5}}>Reset</Text>
+            <TouchableOpacity onPress={()=>{deleteExpesnses();}} style={{alignItems:"center", alignSelf:"center", width:"40%"}}>
+              <Text style={{
+                fontSize:14,
+                marginTop:10,
+                padding:10,
+                backgroundColor:theme.c5,
+                color:theme.b0,
+                textAlign:"center",
+                width:"100%",
+                }}>Delete all records</Text>
             </TouchableOpacity>
           </View>
-
-          <View>
-            <View style={{flexDirection:"row"}}>
-              <Text>수익</Text>
-              <TextInput
-                placeholder="원"
-              />
-            </View>
-            <View style={{flexDirection:"row"}}>
-              <Text>주기</Text>
-              <TextInput
-                placeholder="일"
-              />
-            </View>
-          </View>
           
+          <View style={{backgroundColor:theme.c0_2}}>
+            <View style={{
+              paddingHorizontal:10,
+              flexDirection:"row",
+              justifyContent:"space-around",
+            }}>
+              <Text style={{
+                fontSize:24,
+                paddingVertical:"2%",
+                color:theme.c5,
+                textAlignVertical:"center"
+              }}>
+                {typeof(dDay) == "number"? dDay : "Loading..."} day{dDay==1?"":"s"} to go
+              </Text>
+              <TouchableOpacity style={{
+                justifyContent:"center",
+                backgroundColor:theme.c4_3,
+                paddingVertical:10,
+              }} onPress={()=>{reset()}}>
+                <Text style={{color:theme.b0, padding:5}}>Reset</Text>
+              </TouchableOpacity>
+            </View>
 
-        </View>
-      </ScrollView>
+            <View>
+              <View style={{flexDirection:"row"}}>
+                <Text>수익</Text>
+                <TextInput
+                  placeholder="원"
+                />
+              </View>
+              <View style={{flexDirection:"row"}}>
+                <Text>주기</Text>
+                <TextInput
+                  placeholder="일"
+                />
+              </View>
+            </View>
+            
+
+          </View>
+        </ScrollView>
       </View>
     </View>
   );

@@ -6,15 +6,10 @@ export default function Title({ loading, children }) {
   return (
     <View
       style={{
-        alignSelf:"flex-end",
-        right:"5%",
         alignItems:"center",
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
         backgroundColor: theme.c5,
-        padding:10,
-        paddingTop:20,
-        marginBottom:10,
+        paddingBottom:5,
+        marginBottom:5,
       }}
     >
       <Text 
