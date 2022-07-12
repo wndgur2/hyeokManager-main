@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import { Platform, Text, View, TouchableOpacity, FlatList} from 'react-native';
+import { Platform, Text, View, TouchableOpacity, FlatList, LayoutAnimation} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons";
 import * as NavigationBar from 'expo-navigation-bar';
@@ -72,6 +72,7 @@ export default function Money() {
     saveAsyncStorage(tmpTotal, TOTAL_MONEY_STORAGE_KEY);
     saveAsyncStorage(tmpToday, TODAY_MONEY_STORAGE_KEY);
 
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     const date = new Date();
     const tExpenses = [...expenses, [fix>0?"+"+fix:fix, date.toString().split(' '), date.getTime()]];
     setExpenses(tExpenses);
