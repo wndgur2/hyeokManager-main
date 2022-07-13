@@ -16,18 +16,18 @@ export default function TabsNav() {
     <Tabs.Navigator
       screenOptions={{
         headerShown:false,
-        tabBarInactiveTintColor: theme.c1,
-        tabBarActiveBackgroundColor: theme.c1,
-        tabBarActiveTintColor: theme.c5,
-        tabBarInactiveBackgroundColor: theme.c5,
+        tabBarInactiveTintColor: theme.c5,
+        tabBarActiveBackgroundColor: theme.c5,
+        tabBarActiveTintColor: theme.c1,
+        tabBarInactiveBackgroundColor: theme.c1,
         tabBarLabelStyle:{
           fontSize:12,
           top:"-5%",
         },
         tabBarStyle:{
-          borderTopWidth:0,
+          borderTopWidth:1,
           backgroundColor:theme.c4,
-          elevation: 0.0,
+          borderTopColor: theme.c1_2,
         },
       }}
     >

@@ -1,4 +1,5 @@
 export const theme = {
+  b1:"#FFFADF",
   b0:"#FFF3DA",
   c0:"#FFebad",
   c0_2:"#F6e2a4",
@@ -12,5 +13,6 @@ export const theme = {
   c4_1:"#9AA872",
   c4_2:"#616F39",
   c4_3:"#313F19",
+  c4_4:"#25330D",
   c5:"#111F00",
 };

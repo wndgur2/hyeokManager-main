@@ -166,7 +166,7 @@ export default function Memos() {
   return (
     <ScreenLayout>
       <Title>memos</Title>
-      <View style={{height:"90%"}}>
+      <View style={{height:"85%"}}>
         <FlatList
           data={memos}
           renderItem={renderMemo}
@@ -177,17 +177,19 @@ export default function Memos() {
       
       <View style={{...styles.rects,
         flex:1,
-        justifyContent:"space-around",
-        backgroundColor:theme.c4,
+        justifyContent:"space-between",
         flexDirection:"row",
       }}>
         <TouchableOpacity
+          style={styles.memoOperator}
           onPress={()=>{addMemo();}}>
-          <AntDesign name="plus" color={theme.c5} size={32}/>
+          <AntDesign name="plus" color={theme.b1} size={28}/>
         </TouchableOpacity>
+
         <TouchableOpacity
+          style={styles.memoOperator}
           onPress={()=>{isRemoveMode? setRemoveMode(false):setRemoveMode(true)}}>
-          <AntDesign name="minus" size={32} color={isRemoveMode? theme.c3: theme.c5} />
+          <AntDesign name="minus" size={28} color={isRemoveMode? theme.c2_2: theme.b1} />
         </TouchableOpacity>
       </View>
     </ScreenLayout>

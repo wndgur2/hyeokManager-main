@@ -45,9 +45,10 @@ export default styles = StyleSheet.create({
   rects:{
     alignItems:"center",
     flexDirection:"row",
-    justifyContent:"space-evenly",
+    justifyContent:"space-between",
     width:"100%",
     paddingTop:10,
+    paddingHorizontal:15,
   },
 
   rect:{
@@ -66,14 +67,9 @@ export default styles = StyleSheet.create({
     display: "flex",
   },
 
-  billCard:{
-    alignItems:"center",
-    backgroundColor: theme.b0,
-    margin:5,
-  },
-
-  billCardText:{
-    fontSize:32,
-    color:theme.c5,
-  },
+  memoOperator:{
+    backgroundColor:theme.c5,
+    paddingVertical:8,
+    paddingHorizontal:20,
+  }
 });
