@@ -6,9 +6,6 @@ export default styles = StyleSheet.create({
     "flex": 1,
     backgroundColor: theme.c1,
     overflow:"hidden",
-    margin:0,
-    padding:0,
-    borderWidth:0,
   },
 
   refresh:{
@@ -47,7 +44,6 @@ export default styles = StyleSheet.create({
     flexDirection:"row",
     justifyContent:"space-between",
     width:"100%",
-    paddingTop:10,
     paddingHorizontal:15,
   },
 

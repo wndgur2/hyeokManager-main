@@ -26,11 +26,12 @@ export default function Money() {
   const [date, setDate] = useState(0);
   const [dDay, setDDay] = useState(0);
   const [isAddMode, setAddMode] = useState(false);  
-  const [isLoading, setLoading] = useState(true);
   const [expenses, setExpenses] = useState([]);
   const [payment, setPayment] = useState(0);
   const [payday, setPayday] = useState(1);
   const [isEdittingPayment, setEdittingPayment] = useState(false);
+  const [newPayment, setNewPayment] = useState("");
+  const [newPayday, setNewPayday] = useState("");
 
   const expenseFlist = useRef();
 
@@ -57,18 +58,23 @@ export default function Money() {
     await AsyncStorage.setItem(storageKey, JSON.stringify(toSave));
   };
 
+  const getDays = (year, month) => { return new Date(year, month, 0). getDate(); };
+
   useEffect( () => {
     loadData();
     const tempDate = new Date().getDate();
+    const daysInMonth = getDays(new Date().getFullYear(), new Date().getMonth());
+
     setDate(tempDate);
-    setDDay(25-tempDate > 0 ? 25-tempDate : 55-tempDate);
-    setLoading(false);
+    setDDay(payday-tempDate > 0 ? payday - tempDate : payday + daysInMonth - tempDate);
   }, []);
 
   const newDay = () =>{
     const tempDate = new Date().getDate();
+    const daysInMonth = getDays(new Date().getFullYear(), new Date().getMonth());
+
     setDate(tempDate);
-    setDDay(25-tempDate > 0 ? 25-tempDate : 55-tempDate);
+    setDDay(payday-tempDate > 0 ? payday - tempDate : payday + daysInMonth - tempDate);
 
     const todayMoney = Math.floor(totalMoney/(dDay*100))*100;
     setTodayMoney(todayMoney);
@@ -93,11 +99,9 @@ export default function Money() {
     expenseFlist.current.scrollToOffset({ animated: true, offset: 0 });
   }
 
-  console.log("expenses:", expenses);
-
   const reset = ()=>{
-    setTotalMoney(500000);
-    saveAsyncStorage(500000, TOTAL_MONEY_STORAGE_KEY);
+    setTotalMoney(payment);
+    saveAsyncStorage(payment, TOTAL_MONEY_STORAGE_KEY);
     newDay();
     setExpenses([]);
     saveAsyncStorage([], EXPENSES_STORAGE_KEY);
@@ -113,125 +117,164 @@ export default function Money() {
       <Bill key={expense[2]} cost={expense[0]} time={expense[1]} />
     )
   }
+
+  const startEditting = () =>{
+    setNewPayday(payday.toString());
+    setNewPayment(payment.toString());
+    setEdittingPayment(true);
+  }
+
+  const finishEditting = () =>{
+    setEdittingPayment(false);
+
+    const intNewPayment = parseInt(newPayment);
+    setPayment(intNewPayment);
+    saveAsyncStorage(intNewPayment, PAYMENT_STORAGE_KEY);
+
+    const intNewPayday = parseInt(newPayday);
+    if(intNewPayday<32 && intNewPayday>0){
+      setPayday(intNewPayday);
+      saveAsyncStorage(intNewPayday, PAYDAY_STORAGE_KEY);
+    }
+
+    const daysInMonth = getDays(new Date().getFullYear(), new Date().getMonth());
+    setDDay(intNewPayday-date > 0 ? intNewPayday - date : intNewPayday + daysInMonth - date);
+  }
   
   return (
     <View style={styles.container}>
-      <View style={styles.roundedContainer}>
-        <Title>finance</Title>
+      <Title>finance</Title>
+      <View style={{backgroundColor:theme.c5, marginHorizontal:10, height:100}}>
+        <View style={{
+          paddingHorizontal:10,
+          flexDirection:"row",
+          justifyContent:"space-between",
+        }}>
+          <Text style={{
+            fontSize:18,
+            padding:"2%",
+            color:theme.b1,
+            textAlignVertical:"center"
+          }}>
+            {typeof(dDay) == "number"? dDay : "Loading..."} day{dDay==1?"":"s"} left
+          </Text>
+          <TouchableOpacity style={{
+            justifyContent:"center",
+            backgroundColor:theme.c4_3,
+            paddingVertical:10,
+          }} onPress={()=>{reset()}}>
+            <Text style={{color:theme.b1, padding:5}}>Reset</Text>
+          </TouchableOpacity>
+        </View>
 
-        <ScrollView nestedScrollEnabled>
-
-          <View style={{backgroundColor:theme.c0_2}}>
-            <View style={{
-              paddingHorizontal:10,
-              flexDirection:"row",
-              justifyContent:"space-between",
-            }}>
-              <Text style={{
-                fontSize:18,
-                paddingVertical:"2%",
-                color:theme.c5,
-                textAlignVertical:"center"
-              }}>
-                {typeof(dDay) == "number"? dDay : "Loading..."} day{dDay==1?"":"s"} left
-              </Text>
-              <TouchableOpacity style={{
-                justifyContent:"center",
-                backgroundColor:theme.c4_3,
-                paddingVertical:10,
-              }} onPress={()=>{reset()}}>
-                <Text style={{color:theme.b0, padding:5}}>Reset</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={{flexDirection:"row", width:"100%", justifyContent:"center"}}>
-              <View style={{flexDirection:"row", justifyContent:"space-around", padding:10, alignItems:"center"}}>
-                <Text>매월 </Text>
-                {isEdittingPayment? 
-                <TextInput
-                  blurOnSubmit={true}
-                  value={payday.toString()}
-                  onSubmitEditing={() => {
-                    setPayday(payday);
-                    saveAsyncStorage(payday, PAYDAY_STORAGE_KEY);
-                  }}
-                  onChangeText={(text) => setPayday(parseInt(text))}
-                  placeholder={payday.toString()}
-                /> :
-                <Text>
-                  {payday}
-                </Text>
-                }
-                <Text> 일  </Text>
-                {isEdittingPayment? 
-                <TextInput
-                  blurOnSubmit={true}
-                  value={payment.toString()}
-                  onSubmitEditing={() => {
-                    setPayment(payment);
-                    saveAsyncStorage(payment, PAYMENT_STORAGE_KEY);
-                  }}
-                  onChangeText={(text) => setPayment(parseInt(text))}
-                  placeholder={payment.toString()}
-                /> :
-                <Text>
-                  {payment}
-                </Text>
-                }
-                <Text> 원 지급</Text>
-              </View>
-              <TouchableOpacity onPress={()=>{isEdittingPayment? setEdittingPayment(false):setEdittingPayment(true)}} style={{alignSelf:"center"}}><Ionicons name="create-outline" size={16}></Ionicons></TouchableOpacity>
-            </View>
+        <View style={{flexDirection:"row", width:"100%", justifyContent:"center"}}>
+          <View style={{flexDirection:"row", justifyContent:"space-around", padding:10, alignItems:"center"}}>
+            <Text style={{color:theme.b1}}>매월 </Text>
+            {isEdittingPayment? 
+            <TextInput
+              style={{
+                color:theme.c3,
+                fontSize:16
+              }}
+              blurOnSubmit={true}
+              value={newPayday}
+              onSubmitEditing={() => {
+                setNewPayday(newPayday);
+              }}
+              onChangeText={(text) => setNewPayday(text)}
+            /> :
+            <Text
+              style={{
+                fontSize:16,
+                color:theme.b1
+              }}
+            >
+              {payday}
+            </Text>
+            }
+            <Text
+              style={{color:theme.b1}}
+            > 일  </Text>
+            {isEdittingPayment? 
+            <TextInput
+              style={{
+                color:theme.c3,
+                fontSize:16,
+              }}
+              blurOnSubmit={true}
+              value={newPayment}
+              onSubmitEditing={() => {
+                setNewPayment(newPayment);
+              }}
+              onChangeText={(text) => setNewPayment(text)}
+            /> :
+            <Text
+              style={{
+                fontSize:16,
+                color:theme.b1
+              }}
+            >
+              {payment}
+            </Text>
+            }
+            <Text
+              style={{color:theme.b1}}
+            > 원 지급</Text>
           </View>
+          <TouchableOpacity onPress={()=>{
+              isEdittingPayment? finishEditting():startEditting()
+            }}
 
-          <View style={{ paddingBottom:30, paddingTop:15,}}>
-            <View style={{flexDirection:"row", justifyContent:"space-around"}}>
-              <View style={{...styles.moneyContainer, width:"44%"}}>
-                <Text style={styles.moneyTitle}>TOTAL</Text>
-                <Text style={styles.money}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
-                </View>
+          >
+            <Ionicons name="create-outline" size={16} color={theme.b1}></Ionicons>
+          </TouchableOpacity>
+        </View>
+      </View>
 
-              <View style={{...styles.moneyContainer, width:"44%"}}>
-                <View style={{flexDirection:'row', justifyContent:"space-between"}}>
-                  <Text style={styles.moneyTitle}>TODAY</Text>
-                  <TouchableOpacity style={styles.refresh} onPress={()=>{newDay()}}><MaterialCommunityIcons color={theme.b0} name="autorenew" size={24} /></TouchableOpacity>
-                </View>
-                <Text style={styles.money}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
-              </View>
+      <View>
+        <View style={{paddingVertical:5, flexDirection:"row", justifyContent:"space-around"}}>
+          <View style={{...styles.moneyContainer, width:"44%"}}>
+            <Text style={styles.moneyTitle}>TOTAL</Text>
+            <Text style={styles.money}>{typeof(todayMoney) == "number" ? totalMoney : "NAN"}</Text>
             </View>
 
-            <View style={styles.rects}>
-              <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? setAddMode(false):setAddMode(true)}}><AntDesign color={theme.c5} name={isAddMode? "plus":"minus"} size={28} /></TouchableOpacity>
-              <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(1000) : fixMoney(-1000);}}><Text style={styles.rectText}>1</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(5000) : fixMoney(-5000);}}><Text style={styles.rectText}>5</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(10000) : fixMoney(-10000);}}><Text style={styles.rectText}>10</Text></TouchableOpacity>
+          <View style={{...styles.moneyContainer, width:"44%"}}>
+            <View style={{flexDirection:'row', justifyContent:"space-between"}}>
+              <Text style={styles.moneyTitle}>TODAY</Text>
+              <TouchableOpacity style={styles.refresh} onPress={()=>{newDay()}}><MaterialCommunityIcons color={theme.b0} name="autorenew" size={24} /></TouchableOpacity>
             </View>
-
-            <FlatList
-              style={{maxHeight:320}}
-              nestedScrollEnabled
-              data={[...expenses].reverse()}
-              renderItem={renderExpense}
-              keyExtractor={(expense) => expense[2]}
-              extraData={expenses}
-              ref={expenseFlist}
-              showsVerticalScrollIndicator={false}
-            />
-
-            <TouchableOpacity onPress={()=>{deleteExpesnses();}} style={{alignItems:"center", alignSelf:"center", width:"40%"}}>
-              <Text style={{
-                fontSize:14,
-                marginTop:5,
-                padding:10,
-                backgroundColor:theme.c5,
-                color:theme.b0,
-                textAlign:"center",
-                width:"100%",
-                }}>Delete all records</Text>
-            </TouchableOpacity>
+            <Text style={styles.money}>{typeof(todayMoney) == "number" ? todayMoney : "NAN"}</Text>
           </View>
-          
-        </ScrollView>
+        </View>
+
+        <View style={styles.rects}>
+          <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? setAddMode(false):setAddMode(true)}}><AntDesign color={theme.c5} name={isAddMode? "plus":"minus"} size={28} /></TouchableOpacity>
+          <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(1000) : fixMoney(-1000);}}><Text style={styles.rectText}>1</Text></TouchableOpacity>
+          <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(5000) : fixMoney(-5000);}}><Text style={styles.rectText}>5</Text></TouchableOpacity>
+          <TouchableOpacity style={{...styles.rect, backgroundColor: isAddMode? theme.c2_2:theme.c4}} onPress={()=>{isAddMode? fixMoney(10000) : fixMoney(-10000);}}><Text style={styles.rectText}>10</Text></TouchableOpacity>
+        </View>
+
+        <FlatList
+          style={{maxHeight:400}}
+          data={[...expenses].reverse()}
+          renderItem={renderExpense}
+          keyExtractor={(expense) => expense[2]}
+          extraData={expenses}
+          ref={expenseFlist}
+          showsVerticalScrollIndicator={false}
+        />
+
+        <TouchableOpacity onPress={()=>{deleteExpesnses();}} style={{alignItems:"center", alignSelf:"center", width:"40%"}}>
+          <Text style={{
+            fontSize:14,
+            marginTop:5,
+            padding:10,
+            backgroundColor:theme.c5,
+            color:theme.b0,
+            textAlign:"center",
+            width:"100%",
+            }}>Delete all records</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
