@@ -1,6 +1,6 @@
 import { Platform, StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView, Alert, StatusBar, LayoutAnimation } from 'react-native';
 import { createStackNavigator } from "@react-navigation/stack";
-import { theme } from './colors';
+import { blacks } from './colors';
 import * as NavigationBar from 'expo-navigation-bar';
 import React, {useEffect, useState} from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,10 +13,10 @@ import styles from './styles';
 const Stack = createStackNavigator();
 
 export default function App() {
-  NavigationBar.setBackgroundColorAsync(theme.c5);  
+  NavigationBar.setBackgroundColorAsync(blacks[7]);  
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor={theme.c5} barStyle="light-content" />
+      <StatusBar backgroundColor={blacks[3]} barStyle="light-content" />
       <Stack.Navigator screenOptions={{presentation:"card", headerShown:false}}>
         <Stack.Screen name="Tabs" component={TabsNav}/>
       </Stack.Navigator>

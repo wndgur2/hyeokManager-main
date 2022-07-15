@@ -1,20 +1,18 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { theme } from "../colors";
+import { blacks } from "../colors";
 
 export default function Title({ loading, children }) {
   return (
     <View
       style={{
         alignItems:"center",
-        backgroundColor: theme.c5,
-        paddingBottom:5,
-        marginBottom:5,
+        backgroundColor: blacks[3],
       }}
     >
       <Text 
         style={{
-          color:theme.b0,
+          color:blacks[49],
           fontSize:20,
           textAlign:"center",
         }}

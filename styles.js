@@ -1,70 +1,69 @@
 import {StyleSheet} from "react-native";
-import { theme} from "./colors";
+import { blacks } from "./colors";
 
 export default styles = StyleSheet.create({
   container: {
     "flex": 1,
-    backgroundColor: theme.c1,
+    backgroundColor: blacks[0],
     overflow:"hidden",
   },
 
+  section:{
+    paddingVertical:5,
+    marginBottom:5,
+  },
+
+  button:{
+    padding:5,
+    backgroundColor:blacks[10],
+    color:blacks[50],
+  },
+
   refresh:{
-    width:"27%",
-    left:14,
     alignItems:"center",
     justifyContent:"center",
-    backgroundColor:theme.c5,
+    paddingLeft:3
   },
 
   moneyContainer: {
     paddingVertical:"2%",
-    paddingHorizontal:"6%",
-    backgroundColor: theme.b0,
-    margin:8,
   },
 
   moneyTitle:{
-    fontStyle: "normal",
     fontSize: 20,
-    color: "black",
+    color: blacks[42],
     zIndex: 0,
   },
 
   money:{
-    fontStyle: "normal",
-    fontWeight: "400",
-    fontSize: 28,
-    letterSpacing: 2,
-    color: "black",
+    fontWeight:"bold",
+    fontSize: 32,
+    letterSpacing: 4,
+    color: blacks[49],
     zIndex: 1,
   },
 
   rects:{
-    alignItems:"center",
     flexDirection:"row",
     justifyContent:"space-between",
-    width:"100%",
-    paddingHorizontal:15,
   },
 
   rect:{
-    width:"20%",
     alignItems:"center",
-    backgroundColor:theme.c4,
-    padding:5,
-    margin:5,
+    paddingVertical:5,
+    paddingHorizontal:27,
+    marginTop:8,
+    marginBottom:4,
   },
 
   rectText:{
     fontStyle: "normal",
     fontWeight: "100",
     fontSize: 20,
-    color: theme.c5,
-    display: "flex",
+    color: blacks[49],
   },
 
   memoOperator:{
-    backgroundColor:theme.c5,
     paddingVertical:8,
     paddingHorizontal:20,
   }

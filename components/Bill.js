@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { theme } from "../colors";
+import { blacks } from "../colors";
 
 export default function Bill({ cost, time, children }) {
   var expense = [];
@@ -13,19 +13,17 @@ export default function Bill({ cost, time, children }) {
       style={{
         alignItems: "center",
         justifyContent: "space-between",
-        marginVertical:8.5,
-        marginHorizontal:20,
+        marginBottom:6,
         flexDirection:"row",
       }}
     >
       <Text 
         style={{
-          color:theme.c5,
-          backgroundColor: parseInt(cost)>0?theme.c2:theme.c4,
+          color:blacks[49],
+          backgroundColor: cost>0? blacks[11]:blacks[7],
           fontSize:18,
           width:"50%",
           height:"100%",
-          paddingHorizontal:20,
           textAlign:"center",
           textAlignVertical:"center",
         }}
@@ -35,12 +33,12 @@ export default function Bill({ cost, time, children }) {
 
       <Text 
       style={{
-        color:theme.c5,
-        backgroundColor:theme.c0,
+        color:blacks[45],
+        backgroundColor:blacks[9],
         fontSize:16,
         width:"50%",
-        paddingHorizontal:20,
-        paddingVertical:3,
+        paddingVertical:8,
+        paddingHorizontal:10,
         textAlign:"center",
       }}
       >

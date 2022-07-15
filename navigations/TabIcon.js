@@ -7,7 +7,7 @@ export default function TabIcon({ iconName, color, focused }) {
     <Ionicons
       name={focused ? iconName : `${iconName}`}
       color={color}
-      size={30}
+      size={24}
     />
   );
 }

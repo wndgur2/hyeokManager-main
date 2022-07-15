@@ -1,18 +1,8 @@
-export const theme = {
-  b1:"#FFFADF",
-  b0:"#FFF3DA",
-  c0:"#FFebad",
-  c0_2:"#F6e2a4",
-  c1:"#FFDd93",
-  c1_2:"#F4D288",
-  c2:"#FFB97A",
-  c2_2:"#FAB071",
-  c3:"#FF6A4B",
-  c3_2:"#FF8364",
-  c4:"#AAB882",
-  c4_1:"#9AA872",
-  c4_2:"#616F39",
-  c4_3:"#313F19",
-  c4_4:"#25330D",
-  c5:"#111F00",
-};
+const bl = [];
+var tempStr = "";
+for(let i=0; i<51; i++){
+  tempStr = "rgb(" + (i*5) + "," + (i*5) + "," + (i*5) + ")";
+  bl.push(tempStr);
+}
+
+export const blacks = bl;
