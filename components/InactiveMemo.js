@@ -17,9 +17,9 @@ export default function InactiveMemo({isRemoveMode, removeMemo, memo, editMemo})
         marginVertical:2,
         fontSize:20,
         lineHeight:32,
-        letterSpacing:-1,
-        backgroundColor:blacks[10],
-        color:blacks[45]
+        letterSpacing:0.5,
+        backgroundColor:blacks[7],
+        color:blacks[45],
       }} numberOfLines={1}>{memo[1]}</Text>
     </TouchableOpacity>
   )

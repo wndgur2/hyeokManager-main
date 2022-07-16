@@ -40,19 +40,31 @@ export default function Money() {
 
   const loadData = async () => {
     try{
-      const totalStr = await AsyncStorage.getItem(TOTAL_MONEY_STORAGE_KEY);
-      const todayStr = await AsyncStorage.getItem(TODAY_MONEY_STORAGE_KEY);
-      const tExpenses = await AsyncStorage.getItem(EXPENSES_STORAGE_KEY);
-      const tPayment = await AsyncStorage.getItem(PAYMENT_STORAGE_KEY);
-      const tPayday = await AsyncStorage.getItem(PAYDAY_STORAGE_KEY);
-      const tPaid = await AsyncStorage.getItem(PAID_STORAGE_KEY);
+      const totalStr = parseInt(await AsyncStorage.getItem(TOTAL_MONEY_STORAGE_KEY));
+      const todayStr = parseInt(await AsyncStorage.getItem(TODAY_MONEY_STORAGE_KEY));
+      const tExpenses = JSON.parse(await AsyncStorage.getItem(EXPENSES_STORAGE_KEY));
+      const tPayment = parseInt(await AsyncStorage.getItem(PAYMENT_STORAGE_KEY));
+      const tPayday = parseInt(await AsyncStorage.getItem(PAYDAY_STORAGE_KEY));
+      const tPaid = (await AsyncStorage.getItem(PAID_STORAGE_KEY)=="true"? true:false);
 
-      if(totalStr) setTotalMoney(parseInt(totalStr));
-      if(todayStr) setTodayMoney(parseInt(todayStr));
-      if(tExpenses) setExpenses(JSON.parse(tExpenses));
-      if(tPayment) setPayment(parseInt(tPayment));
-      if(tPayday) setPayday(parseInt(tPayday));
+      if(totalStr) setTotalMoney(totalStr);
+      if(todayStr) setTodayMoney(todayStr);
+      if(tExpenses) setExpenses(tExpenses);
+      if(tPayment) setPayment(tPayment);
+      if(tPayday) setPayday(tPayday);
       if(tPaid) setPaid(tPaid);
+
+      const tempDate = new Date().getDate();
+      if((tempDate!=tPayday) && tPaid){
+        setPaid(false);
+        saveAsyncStorage(false, PAID_STORAGE_KEY);
+      }
+      if((tempDate==tPayday) && (!tPaid)){
+        fixMoney(tPayment);
+        setPaid(true);
+        saveAsyncStorage(true, PAID_STORAGE_KEY);
+        console.log("Paid");
+      }
     } catch(e){
       console.log(e);
       console.log('loadDataError');
@@ -69,14 +81,6 @@ export default function Money() {
     loadData();
     const tempDate = new Date().getDate();
     const daysInMonth = getDays(new Date().getFullYear(), new Date().getMonth());
-
-    console.log(isPaid, tempDate, payday);
-    if((tempDate==parseInt(payday)) && (!isPaid)){
-      fixMoney(parseInt(payment));
-      setPaid(true);
-      saveAsyncStorage(true, PAID_STORAGE_KEY);
-      console.log("Paid");
-    }
     setDate(tempDate);
     setDDay(payday-tempDate > 0 ? payday - tempDate : payday==tempDate? 0 : payday + daysInMonth - tempDate);
   }, []);
@@ -161,65 +165,39 @@ export default function Money() {
   return (
     <View style={styles.container}>
       <View style={{flexDirection:"row", width:"100%", justifyContent:"center"}}>
-        <View style={{flexDirection:"row", justifyContent:"space-around", padding:10, alignItems:"center"}}>
-          <Text style={{color:blacks[49]}}>매월 </Text>
-          {isEdittingPayment? 
-          <TextInput
-            style={{
-              color:blacks[40],
-              fontSize:16
-            }}
-            blurOnSubmit={true}
-            value={newPayday}
-            onSubmitEditing={() => {
-              setNewPayday(newPayday);
-            }}
-            onChangeText={(text) => setNewPayday(text)}
-          /> :
-          <Text
-            style={{
-              fontSize:16,
-              color:blacks[49]
-            }}
-          >
-            {payday}
-          </Text>
-          }
-          <Text
-            style={{color:blacks[49]}}
-          > 일  </Text>
-          {isEdittingPayment? 
-          <TextInput
-            style={{
-              color:blacks[40],
-              fontSize:16,
-            }}
-            blurOnSubmit={true}
-            value={newPayment}
-            onSubmitEditing={() => {
-              setNewPayment(newPayment);
-            }}
-            onChangeText={(text) => setNewPayment(text)}
-          /> :
-          <Text
-            style={{
-              fontSize:16,
-              color:blacks[49]
-            }}
-          >
-            {payment}
-          </Text>
-          }
-          <Text
-            style={{color:blacks[49]}}
-          > 원 지급</Text>
-        </View>
-        <TouchableOpacity onPress={()=>{
-            isEdittingPayment? finishEditting():startEditting()
+        <Text style={{color:blacks[49], textAlignVertical:"center"}}>매월 </Text>
+        {isEdittingPayment? 
+        <TextInput
+          style={{color:blacks[50], fontSize:17, backgroundColor:blacks[7],}}
+          blurOnSubmit={true}
+          value={newPayday}
+          onSubmitEditing={() => {
+            setNewPayday(newPayday);
           }}
-
-        >
-          <Ionicons name="create-outline" size={16} color={blacks[49]}></Ionicons>
+          onChangeText={(text) => setNewPayday(text)}
+        /> :
+        <Text style={{fontSize:16, color:blacks[49], textAlignVertical:"center"}}>
+          {payday}
+        </Text>
+        }
+        <Text style={{color:blacks[49], textAlignVertical:"center"}}> 일  </Text>
+        {isEdittingPayment? 
+        <TextInput
+          style={{color:blacks[50], fontSize:17, backgroundColor:blacks[7],}}
+          blurOnSubmit={true}
+          value={newPayment}
+          onSubmitEditing={() => {
+            setNewPayment(newPayment);
+          }}
+          onChangeText={(text) => setNewPayment(text)}
+        /> :
+        <Text style={{fontSize:16, color:blacks[49], textAlignVertical:"center"}}>
+          {payment}
+        </Text>
+        }
+        <Text style={{color:blacks[49], textAlignVertical:"center"}}> 원 지급 </Text>
+        <TouchableOpacity style={{justifyContent:"center"}} onPress={()=>{isEdittingPayment? finishEditting():startEditting()}}>
+          <Ionicons name={isEdittingPayment? "checkmark": "create-outline"} size={16} color={isEdittingPayment? "lightgreen" : blacks[49]}></Ionicons>
         </TouchableOpacity>
       </View>
       <View style={styles.section}>
@@ -267,7 +245,7 @@ export default function Money() {
       <FlatList
         style={{
           minHeight:0,
-          maxHeight:500,
+          maxHeight:450,
           backgroundColor:blacks[5],
         }}
         data={[...expenses].reverse()}

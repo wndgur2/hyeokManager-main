@@ -36,7 +36,7 @@ export default function Bill({ cost, time, children }) {
         backgroundColor:blacks[9],
         fontSize:16,
         width:"60%",
-        paddingVertical:8,
+        paddingVertical:10,
         paddingHorizontal:10,
         textAlign:"center",
       }}
