@@ -53,7 +53,6 @@ export default styles = StyleSheet.create({
     paddingVertical:5,
     paddingHorizontal:27,
     marginTop:8,
-    marginBottom:4,
   },
 
   rectText:{

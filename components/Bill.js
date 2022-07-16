@@ -13,7 +13,6 @@ export default function Bill({ cost, time, children }) {
       style={{
         alignItems: "center",
         justifyContent: "space-between",
-        marginBottom:6,
         flexDirection:"row",
       }}
     >
@@ -22,7 +21,7 @@ export default function Bill({ cost, time, children }) {
           color:blacks[49],
           backgroundColor: cost>0? blacks[11]:blacks[7],
           fontSize:18,
-          width:"50%",
+          width:"40%",
           height:"100%",
           textAlign:"center",
           textAlignVertical:"center",
@@ -36,7 +35,7 @@ export default function Bill({ cost, time, children }) {
         color:blacks[45],
         backgroundColor:blacks[9],
         fontSize:16,
-        width:"50%",
+        width:"60%",
         paddingVertical:8,
         paddingHorizontal:10,
         textAlign:"center",

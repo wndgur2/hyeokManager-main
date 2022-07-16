@@ -13,7 +13,7 @@ import styles from './styles';
 const Stack = createStackNavigator();
 
 export default function App() {
-  NavigationBar.setBackgroundColorAsync(blacks[7]);  
+  NavigationBar.setBackgroundColorAsync(blacks[6]);  
   return (
     <NavigationContainer>
       <StatusBar backgroundColor={blacks[3]} barStyle="light-content" />

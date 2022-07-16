@@ -19,9 +19,10 @@ export default function Money() {
   const LAST_DATE_STORAGE_KEY = '@lastDate';
   const EXPENSES_STORAGE_KEY = '@expenses';
   const PAYMENT_STORAGE_KEY = "@payment";
-  const PAYDAY_STORAGE_KEY = "@payTerm";
+  const PAYDAY_STORAGE_KEY = "@payDay";
+  const PAID_STORAGE_KEY = "@paid";
 
-  NavigationBar.setBackgroundColorAsync(blacks[3]);
+  NavigationBar.setBackgroundColorAsync(blacks[6]);
   const [todayMoney, setTodayMoney] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
   const [date, setDate] = useState(0);
@@ -33,6 +34,7 @@ export default function Money() {
   const [isEdittingPayment, setEdittingPayment] = useState(false);
   const [newPayment, setNewPayment] = useState("");
   const [newPayday, setNewPayday] = useState("");
+  const [isPaid, setPaid] = useState(false);
 
   const expenseFlist = useRef();
 
@@ -43,12 +45,14 @@ export default function Money() {
       const tExpenses = await AsyncStorage.getItem(EXPENSES_STORAGE_KEY);
       const tPayment = await AsyncStorage.getItem(PAYMENT_STORAGE_KEY);
       const tPayday = await AsyncStorage.getItem(PAYDAY_STORAGE_KEY);
+      const tPaid = await AsyncStorage.getItem(PAID_STORAGE_KEY);
 
       if(totalStr) setTotalMoney(parseInt(totalStr));
       if(todayStr) setTodayMoney(parseInt(todayStr));
       if(tExpenses) setExpenses(JSON.parse(tExpenses));
       if(tPayment) setPayment(parseInt(tPayment));
       if(tPayday) setPayday(parseInt(tPayday));
+      if(tPaid) setPaid(tPaid);
     } catch(e){
       console.log(e);
       console.log('loadDataError');
@@ -66,8 +70,15 @@ export default function Money() {
     const tempDate = new Date().getDate();
     const daysInMonth = getDays(new Date().getFullYear(), new Date().getMonth());
 
+    console.log(isPaid, tempDate, payday);
+    if((tempDate==parseInt(payday)) && (!isPaid)){
+      fixMoney(parseInt(payment));
+      setPaid(true);
+      saveAsyncStorage(true, PAID_STORAGE_KEY);
+      console.log("Paid");
+    }
     setDate(tempDate);
-    setDDay(payday-tempDate > 0 ? payday - tempDate : payday + daysInMonth - tempDate);
+    setDDay(payday-tempDate > 0 ? payday - tempDate : payday==tempDate? 0 : payday + daysInMonth - tempDate);
   }, []);
 
   const newDay = () =>{
@@ -75,11 +86,16 @@ export default function Money() {
     const daysInMonth = getDays(new Date().getFullYear(), new Date().getMonth());
 
     setDate(tempDate);
-    setDDay(payday-tempDate > 0 ? payday - tempDate : payday + daysInMonth - tempDate);
+    setDDay(payday-tempDate > 0 ? payday - tempDate : payday==tempDate? 0 : payday + daysInMonth - tempDate);
 
-    const todayMoney = Math.floor(totalMoney/(dDay*100))*100;
-    setTodayMoney(todayMoney);
-    saveAsyncStorage(todayMoney, TODAY_MONEY_STORAGE_KEY);
+    var tmpTodayMoney;
+    if(dDay==0){
+      tmpTodayMoney = totalMoney;
+    } else{
+      tmpTodayMoney = Math.floor(totalMoney/(dDay*100))*100;
+    }
+    setTodayMoney(tmpTodayMoney);
+    saveAsyncStorage(tmpTodayMoney, TODAY_MONEY_STORAGE_KEY);
   }
 
   const fixMoney = (fix) => {
@@ -144,6 +160,68 @@ export default function Money() {
   
   return (
     <View style={styles.container}>
+      <View style={{flexDirection:"row", width:"100%", justifyContent:"center"}}>
+        <View style={{flexDirection:"row", justifyContent:"space-around", padding:10, alignItems:"center"}}>
+          <Text style={{color:blacks[49]}}>매월 </Text>
+          {isEdittingPayment? 
+          <TextInput
+            style={{
+              color:blacks[40],
+              fontSize:16
+            }}
+            blurOnSubmit={true}
+            value={newPayday}
+            onSubmitEditing={() => {
+              setNewPayday(newPayday);
+            }}
+            onChangeText={(text) => setNewPayday(text)}
+          /> :
+          <Text
+            style={{
+              fontSize:16,
+              color:blacks[49]
+            }}
+          >
+            {payday}
+          </Text>
+          }
+          <Text
+            style={{color:blacks[49]}}
+          > 일  </Text>
+          {isEdittingPayment? 
+          <TextInput
+            style={{
+              color:blacks[40],
+              fontSize:16,
+            }}
+            blurOnSubmit={true}
+            value={newPayment}
+            onSubmitEditing={() => {
+              setNewPayment(newPayment);
+            }}
+            onChangeText={(text) => setNewPayment(text)}
+          /> :
+          <Text
+            style={{
+              fontSize:16,
+              color:blacks[49]
+            }}
+          >
+            {payment}
+          </Text>
+          }
+          <Text
+            style={{color:blacks[49]}}
+          > 원 지급</Text>
+        </View>
+        <TouchableOpacity onPress={()=>{
+            isEdittingPayment? finishEditting():startEditting()
+          }}
+
+        >
+          <Ionicons name="create-outline" size={16} color={blacks[49]}></Ionicons>
+        </TouchableOpacity>
+      </View>
       <View style={styles.section}>
         <View style={{
           paddingHorizontal:20,
@@ -155,7 +233,7 @@ export default function Money() {
             color:blacks[49],
             textAlignVertical:"center"
           }}>
-            {typeof(dDay) == "number"? dDay : "Loading..."} day{dDay==1?"":"s"} left
+            {dDay==0? "HoOraY!" : (dDay==1? (dDay+" day left"):(dDay+" days left"))}
           </Text>
           <TouchableOpacity style={styles.button} onPress={()=>{reset()}}>
             <Text style={styles.button}>Reset</Text>
@@ -180,7 +258,7 @@ export default function Money() {
       </View>
 
       <View style={styles.rects}>
-        <TouchableOpacity style={{...styles.rect, backgroundColor:blacks[10]}} onPress={()=>{isAddMode? setAddMode(false):setAddMode(true)}}><Text style={{fontSize:18, color:blacks[49], textAlignVertical:"bottom"}}>{isAddMode? "ADD":"SPEND"}</Text></TouchableOpacity>
+        <TouchableOpacity style={{...styles.rect, backgroundColor:isAddMode? blacks[11]:blacks[7]}} onPress={()=>{isAddMode? setAddMode(false):setAddMode(true)}}><Text style={{fontSize:18, color:blacks[49], textAlignVertical:"bottom"}}>{isAddMode? "ADD":"SPEND"}</Text></TouchableOpacity>
         <TouchableOpacity style={styles.rect} onPress={()=>{isAddMode? fixMoney(1000) : fixMoney(-1000);}}><Text style={styles.rectText}>1</Text></TouchableOpacity>
         <TouchableOpacity style={styles.rect} onPress={()=>{isAddMode? fixMoney(5000) : fixMoney(-5000);}}><Text style={styles.rectText}>5</Text></TouchableOpacity>
         <TouchableOpacity style={styles.rect} onPress={()=>{isAddMode? fixMoney(10000) : fixMoney(-10000);}}><Text style={styles.rectText}>10</Text></TouchableOpacity>
@@ -189,7 +267,7 @@ export default function Money() {
       <FlatList
         style={{
           minHeight:0,
-          maxHeight:400,
+          maxHeight:500,
           backgroundColor:blacks[5],
         }}
         data={[...expenses].reverse()}

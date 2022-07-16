@@ -11,7 +11,7 @@ import InactiveMemo from "../components/InactiveMemo";
 import { blacks } from "../colors";
 
 export default function Memos() {
-  NavigationBar.setBackgroundColorAsync(blacks[1]);
+  NavigationBar.setBackgroundColorAsync(blacks[6]);
 
   const MEMO_STORAGE_KEY = '@memos__';
 
