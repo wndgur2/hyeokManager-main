@@ -207,15 +207,12 @@ export default function Money() {
           justifyContent:"space-evenly",
         }}>
           <Text style={{
-            fontSize:18,
+            fontSize:20,
             color:blacks[49],
             textAlignVertical:"center"
           }}>
             {dDay==0? "HoOraY!" : (dDay==1? (dDay+" day left"):(dDay+" days left"))}
           </Text>
-          <TouchableOpacity style={styles.button} onPress={()=>{reset()}}>
-            <Text style={styles.button}>Reset</Text>
-          </TouchableOpacity>
         </View>
       </View>
 

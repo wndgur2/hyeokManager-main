@@ -59,10 +59,10 @@ export default function TabsNav() {
       </Tabs.Screen>
       
       <Tabs.Screen
-        name="Setting"
+        name="Informations"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName={focused?"settings":"settings-outline"} color={color} focused={focused} />
+            <TabIcon iconName={focused?"information-circle":"information-circle-outline"} color={color} focused={focused} />
           ),
         }}
       >

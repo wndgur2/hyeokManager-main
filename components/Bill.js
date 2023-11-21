@@ -5,8 +5,7 @@ import { blacks } from "../colors";
 export default function Bill({ cost, time, children }) {
   var expense = [];
 
-  for (let i=0; i<5; i++)
-    expense.push(<Text key={i}>{time[i]} </Text>);
+  for(let i=0; i<5; i++) expense.push(<Text key={i}>{time[i]} </Text>);
 
   return (
     <View
